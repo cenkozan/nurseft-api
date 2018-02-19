@@ -8,8 +8,8 @@
     "build": "ng build",
     "start": "node dist/server/app.js",
     "predev": "tsc -p server",
-    "dev": "concurrently \"tsc -w -p server\" \"nodemon dist/server/app.js\"",
-    "prod": "concurrently \"ng build -aot -prod && tsc -p server && node dist/server/app.js\"",
+    "dev": "concurrently \"mongod\" \"tsc -w -p server\" \"nodemon dist/server/app.js\"",
+    "prod": "concurrently \"mongod\" \"ng build -aot -prod && tsc -p server && node dist/server/app.js\"",
     "testbe": "tsc -p server && node_modules/.bin/mocha dist/server/test"
   },
   "private": true,
@@ -37,6 +37,7 @@
     "mocha": "^3.4.2",
     "nodemon": "1.11.0",
     "protractor": "~5.1.2",
+    "tslint": "^5.9.1",
     "ts-node": "~3.2.0",
     "typescript": "^2.7.2"
   }
