@@ -15,6 +15,63 @@ class ClientCtrl extends base_1.default {
                 res.json(docs);
             });
         };
+        this.insertTemperature = (req, res) => {
+            this.model.findById(req.params.id, (err, docs) => {
+                if (err) {
+                    return console.error(err);
+                }
+                if (docs.temperatures) {
+                    docs.temperatures.push(req.body.temperature);
+                }
+                else {
+                    docs.temperatures = [req.body.temperature];
+                }
+                docs.save(function (err, data) {
+                    if (err) {
+                        return console.error(err);
+                    }
+                    res.json(data);
+                });
+            });
+        };
+        this.insertBloodPressure = (req, res) => {
+            this.model.findById(req.params.id, (err, docs) => {
+                if (err) {
+                    return console.error(err);
+                }
+                if (docs.bloodPressures) {
+                    docs.bloodPressures.push(req.body.bloodPressure);
+                }
+                else {
+                    docs.bloodPressures = [req.body.bloodPressure];
+                }
+                docs.save(function (err, data) {
+                    if (err) {
+                        return console.error(err);
+                    }
+                    res.json(data);
+                });
+            });
+        };
+        this.insertWeight = (req, res) => {
+            this.model.findById(req.params.id, (err, docs) => {
+                if (err) {
+                    return console.error(err);
+                }
+                if (docs.weights) {
+                    docs.weights.push(req.body.weight);
+                }
+                else {
+                    docs.weights = [req.body.weight];
+                }
+                docs.save(function (err, data) {
+                    if (err) {
+                        return console.error(err);
+                    }
+                    res.json(data);
+                });
+            });
+        };
     }
 }
 exports.default = ClientCtrl;
