@@ -20,9 +20,9 @@ export default class ClientCtrl extends BaseCtrl {
         return console.error(err);
       }
       if (docs.temperatures) {
-        docs.temperatures.push(req.body.temperature);
+        docs.temperatures.push(req.body);
       } else {
-        docs.temperatures = [req.body.temperature];
+        docs.temperatures = [req.body];
       }
       docs.save(function (err, data) {
         if (err) {
@@ -39,9 +39,9 @@ export default class ClientCtrl extends BaseCtrl {
         return console.error(err);
       }
       if (docs.bloodPressures) {
-        docs.bloodPressures.push(req.body.bloodPressure);
+        docs.bloodPressures.push(req.body);
       } else {
-        docs.bloodPressures = [req.body.bloodPressure];
+        docs.bloodPressures = [req.body];
       }
       docs.save(function (err, data) {
         if (err) {
@@ -58,9 +58,9 @@ export default class ClientCtrl extends BaseCtrl {
         return console.error(err);
       }
       if (docs.weights) {
-        docs.weights.push(req.body.weight);
+        docs.weights.push(req.body);
       } else {
-        docs.weights = [req.body.weight];
+        docs.weights = [req.body];
       }
       docs.save(function (err, data) {
         if (err) {
