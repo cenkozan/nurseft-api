@@ -12,7 +12,7 @@ const clientSchema = new mongoose.Schema({
   addressLine2: String,
   city: String,
   postcode: String,
-  services: String,
+  additionalInformation: String,
   // appointments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Appointment' }]
   // contacts: [{name: String, phone: Number, address: String}],
   bloodPressures: [{date: Date, systolic: Number, diastolic: Number}],
