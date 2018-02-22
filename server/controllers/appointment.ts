@@ -46,7 +46,10 @@ export default class AppointmentCtrl extends BaseCtrl {
       }
       let sum: number = 0;
       docs.forEach(appointment => {
-        sum = sum + appointment.rate;
+        const startDate = moment(appointment.start);
+        const endDate = moment(appointment.end);
+        const count = endDate.diff(startDate, 'hours');
+        sum = sum + (count * appointment.rate);
       });
       res.status(200).json(sum);
     });
