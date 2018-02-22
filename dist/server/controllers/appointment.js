@@ -50,6 +50,14 @@ class AppointmentCtrl extends base_1.default {
                 res.status(200).json(sum);
             });
         };
+        this.getAppointmentsOfClientInDateRange = (req, res) => {
+            this.model.find({ client: req.params.id, start: { $gte: req.params.start }, end: { $lte: req.params.end } }, (err, docs) => {
+                if (err) {
+                    return console.error(err);
+                }
+                res.status(200).json(docs);
+            });
+        };
     }
 }
 exports.default = AppointmentCtrl;

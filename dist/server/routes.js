@@ -54,6 +54,7 @@ function setRoutes(app) {
     router.route('/appointment/:id').delete(appointmentCtrl.delete);
     router.route('/appointment/client/:id').get(appointmentCtrl.getAllByClient);
     router.route('/appointment/carer/:id').get(appointmentCtrl.getAllByCarer);
+    router.route('/appointment/client/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfClientInDateRange);
     // Reports
     router.route('/reports/total-hours').get(appointmentCtrl.countTotalHours);
     router.route('/reports/total-revenue').get(appointmentCtrl.countTotalRevenue);

@@ -52,4 +52,13 @@ export default class AppointmentCtrl extends BaseCtrl {
     });
   };
 
+  getAppointmentsOfClientInDateRange = (req, res) => {
+    this.model.find({client: req.params.id, start: {$gte: req.params.start}, end: {$lte: req.params.end}}, (err, docs) => {
+      if (err) {
+        return console.error(err);
+      }
+      res.status(200).json(docs);
+    });
+  };
+
 }
