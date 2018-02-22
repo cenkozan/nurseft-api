@@ -57,6 +57,7 @@ function setRoutes(app) {
     router.route('/appointment/client/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfClientInDateRange);
     router.route('/appointment/reports/total-hours').get(appointmentCtrl.countTotalHours);
     router.route('/appointment/reports/total-revenue').get(appointmentCtrl.countTotalRevenue);
+    router.route('/appointment/reports/weekly-report').get(appointmentCtrl.getWeeklyReport);
     // Apply the routes to our application with the prefix /api
     app.use('/api', router);
 }
