@@ -65,6 +65,7 @@ export default function setRoutes(app) {
   router.route('/appointment/reports/total-hours').get(appointmentCtrl.countTotalHours);
   router.route('/appointment/reports/total-revenue').get(appointmentCtrl.countTotalRevenue);
   router.route('/appointment/reports/weekly-report').get(appointmentCtrl.getWeeklyReport);
+  router.route('/appointment/carer/:id/reports/weekly-report').get(appointmentCtrl.getWeeklyReportByCarer);
 
   // Apply the routes to our application with the prefix /api
   app.use('/api', router);
