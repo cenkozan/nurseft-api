@@ -100,7 +100,7 @@ export default class AppointmentCtrl extends BaseCtrl {
 
   getWeeklyReportByCarer = (req, res) => {
     let type: moment.unitOfTime.StartOf = 'week';
-    this.model.find({carer: req.params.id, start: {$gte: moment().startOf(type).add(1,'days')}, end: {$lte: moment().startOf(type).add(6,'days')}}, (err, docs) => {
+    this.model.find({carer: req.params.id, start: {$gte: moment().startOf(type).add(1,'days')}, end: {$lte: moment().startOf(type).add(8,'days')}}, (err, docs) => {
       if (err) {
         return console.error(err);
       }
