@@ -14,7 +14,7 @@ app.use('/', express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const uristring = 'mongodb://127.0.0.1:27017';
+const uristring = 'mongodb://ec2-18-197-19-162.eu-central-1.compute.amazonaws.com:27017/';
 mongoose.connect(uristring, function (err, response) {
   if (err) {
     console.log ('ERROR connecting to: ' + uristring + '. ' + err);
