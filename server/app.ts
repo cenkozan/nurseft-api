@@ -14,12 +14,13 @@ app.use('/', express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const uristring = 'mongodb://ec2-18-197-19-162.eu-central-1.compute.amazonaws.com:27017/';
-mongoose.connect(uristring, function (err, response) {
+const mongoDBURIString = process.env.MONGODB_URI;
+
+mongoose.connect(mongoDBURIString, function (err, response) {
   if (err) {
-    console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    console.log ('ERROR connecting to: ' + mongoDBURIString + '. ' + err);
   } else {
-    console.log ('Succeeded connected to: ' + uristring);
+    console.log ('Succeeded connected to: ' + mongoDBURIString);
 
     setRoutes(app);
 
