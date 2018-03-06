@@ -17,7 +17,8 @@ const clientSchema = new mongoose.Schema({
   // contacts: [{name: String, phone: Number, address: String}],
   bloodPressures: [{date: Date, systolic: Number, diastolic: Number}],
   weights: [{date: Date, weight: Number}],
-  temperatures: [{date: Date, temperature: Number}]
+  temperatures: [{date: Date, temperature: Number}],
+  incidents: [{date: Date, description: String}]
 });
 
 const Client = mongoose.model('Client', clientSchema);
