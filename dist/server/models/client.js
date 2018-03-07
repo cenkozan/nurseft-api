@@ -6,6 +6,7 @@ const clientSchema = new mongoose.Schema({
     lastName: String,
     phone: String,
     email: String,
+    currentRate: Number,
     gender: String,
     dob: Date,
     addressLine1: String,
@@ -16,8 +17,9 @@ const clientSchema = new mongoose.Schema({
     // appointments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Appointment' }]
     // contacts: [{name: String, phone: Number, address: String}],
     bloodPressures: [{ date: Date, systolic: Number, diastolic: Number }],
-    weights: [{ date: Date, weight: Number }],
-    temperatures: [{ date: Date, temperature: Number }]
+    weights: [{ date: Date, weight: Number, metrics: String }],
+    temperatures: [{ date: Date, temperature: Number }],
+    incidents: [{ date: Date, description: String }]
 });
 const Client = mongoose.model('Client', clientSchema);
 exports.default = Client;
