@@ -7,6 +7,7 @@ const clientSchema = new mongoose.Schema({
   phone: String,
   email: String,
   currentRate: Number,
+  currentSleepoverRate: Number,
   gender: String,
   dob: Date,
   addressLine1: String,
