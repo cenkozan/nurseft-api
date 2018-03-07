@@ -4,7 +4,7 @@
   "author": "Cenk Ozan Kahraman",
   "description": "Backend API for DrommCare web - Healthcare Professionals",
   "engines": {
-    "node": ">=50.9"
+    "node": ">=9.7.1"
   },
   "scripts": {
     "ng": "ng",
