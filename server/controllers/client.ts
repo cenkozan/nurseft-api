@@ -71,5 +71,24 @@ export default class ClientCtrl extends BaseCtrl {
     });
   };
 
+  insertIncident = (req, res) => {
+    this.model.findById(req.params.id, (err, docs) => {
+      if (err) {
+        return console.error(err);
+      }
+      if (docs.incidents) {
+        docs.incidents.push(req.body);
+      } else {
+        docs.incidents = [req.body];
+      }
+      docs.save(function (err, data) {
+        if (err) {
+          return console.error(err);
+        }
+        res.json(data);
+      });
+    });
+  };
+
 }
 

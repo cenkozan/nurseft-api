@@ -7,11 +7,11 @@ const app_1 = require("../app");
 const carer_1 = require("../models/carer");
 const should = chai.use(chaiHttp).should();
 describe('Carers', () => {
-    beforeEach(done => {
-        carer_1.default.remove({}, err => {
-            done();
-        });
-    });
+    // beforeEach(done => {
+    //   Carer.remove({}, err => {
+    //     done();
+    //   });
+    // });
     describe('Backend tests for carers', () => {
         it('should get all the carers', done => {
             chai.request(app_1.app)
@@ -34,120 +34,95 @@ describe('Carers', () => {
             });
         });
         it('should create new carer', done => {
-            const carer = new carer_1.default({ names: 'Dave', surname: 'David', gender: 'M', dob: '14 June 1949',
-                email: 'cokahraman@hotmail.com', appointments: [{ title: 'x', start: 'deneme', end: 'deneme', dow: 'deneme' }],
-                phoneNumber: '7777777777',
-                address: '141 NorthWood Way, London, HA6 1RF', userName: 'davedavid' });
+            const carer = new carer_1.default({ firstName: 'Dave', lastName: 'Carer', phone: '5554444213', email: 'davecarer@hotmail.com',
+                gender: 'Male', dob: '1960-02-13',
+                addressLine1: '141 NorthWood Way', addressLine2: 'Northwood', city: 'London', postcode: 'HA6 1RF' });
             chai.request(app_1.app)
                 .post('/api/carer')
                 .send(carer)
                 .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
-                res.body.should.have.a.property('names');
-                res.body.should.have.a.property('surname');
+                res.body.should.have.a.property('firstName');
+                res.body.should.have.a.property('lastName');
                 res.body.should.have.a.property('gender');
                 // res.body.should.have.a.property('appointments');
                 done();
             });
         });
         it('should create new carer', done => {
-            const client = {
-                firstName: 'Dave',
-                lastName: 'Davidson',
-                gender: 'Male',
-                dob: '1968-07-22',
-                addressLine1: 'Westminster',
-                addressLine2: '',
-                city: 'London',
-                postcode: 'SW1A 1AA',
-                additionalInformation: 'Napoleon Complex',
-                bloodPressures: [{ date: '2018-02-01', systolic: '120', diastolic: '80' }, { date: '2018-02-02', systolic: '121', diastolic: '81' }, { date: '2018-02-03', systolic: '120', diastolic: '80' }],
-                weights: [{ date: '2018-02-01', weight: '80' }, { date: '2018-02-02', weight: '80' }, { date: '2018-02-03', weight: '80' }],
-                temperatures: [{ date: '2018-02-01', temperature: '37' }, { date: '2018-02-02', temperature: '37' }, { date: '2018-02-03', temperature: '37' }],
-            };
+            const carer = new carer_1.default({ firstName: 'John', lastName: 'Carer', phone: '5553338976', email: 'johncarer@gmail.com',
+                gender: 'Male', dob: '1970-02-13',
+                addressLine1: '140 NorthWood Way', addressLine2: 'Northwood', city: 'London', postcode: 'HA6 5RX' });
             chai.request(app_1.app)
-                .post('/api/client')
-                .send(client)
+                .post('/api/carer')
+                .send(carer)
                 .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
-                res.body.should.have.a.property('_id');
                 res.body.should.have.a.property('firstName');
                 res.body.should.have.a.property('lastName');
                 res.body.should.have.a.property('gender');
+                // res.body.should.have.a.property('appointments');
                 done();
             });
         });
-        it('should create new client', done => {
-            const client = {
-                firstName: 'David',
-                lastName: 'Davidson Jr',
-                gender: 'Male',
-                dob: '1945-11-11',
-                addressLine1: 'SW1A 1AA',
-                city: 'London',
-                postcode: 'SW1A 1AA',
-                additionalInformation: 'A prozac every 8 hours after meal',
-                bloodPressures: [{ date: '2018-02-01', systolic: '120', diastolic: '80' }, { date: '2018-02-02', systolic: '121', diastolic: '81' }, { date: '2018-02-03', systolic: '120', diastolic: '80' }],
-                weights: [{ date: '2018-02-01', weight: '80' }, { date: '2018-02-02', weight: '80' }, { date: '2018-02-03', weight: '80' }],
-                temperatures: [{ date: '2018-02-01', temperature: '37' }, { date: '2018-02-02', temperature: '37' }, { date: '2018-02-03', temperature: '37' }],
-            };
+        it('should create new carer', done => {
+            const carer = new carer_1.default({ firstName: 'Jane', lastName: 'Carer', phone: '5555691234', email: 'janecarer@hotmail.com',
+                gender: 'Female', dob: '1968-02-13',
+                addressLine1: 'YMCA', addressLine2: 'Hollywood', city: 'London', postcode: 'N2 1RT' });
             chai.request(app_1.app)
-                .post('/api/client')
-                .send(client)
+                .post('/api/carer')
+                .send(carer)
                 .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
-                res.body.should.have.a.property('_id');
                 res.body.should.have.a.property('firstName');
                 res.body.should.have.a.property('lastName');
                 res.body.should.have.a.property('gender');
+                // res.body.should.have.a.property('appointments');
                 done();
             });
         });
-        // it('should get a carer by its id', done => {
-        //   const carer = new Carer ({names: 'Dave', surname: 'David', gender: 'M', dob: '14 June 1949',
-        //     email: 'cokahraman@hotmail.com', phoneNumber: '7777777777', address: '141 NorthWood Way, London, HA6 1RF', userName: 'davedavid' });
-        //   carer.save((error, newCarer) => {
-        //     chai.request(app)
-        //       .get(`/api/carer/${newCarer.id}`)
-        //       .end((err, res) => {
-        //         res.should.have.status(200);
-        //         res.body.should.be.a('object');
-        //         res.body.should.have.property('userName');
-        //         res.body.should.have.property('email');
-        //         res.body.should.have.property('_id').eql(newCarer.id);
-        //         done();
-        //       });
-        //   });
-        // });
-        //
-        // it('should update a carer by its id', done => {
-        //   const carer = new Carer({names: 'Dave', surname: 'David', gender: 'M', dob: '14 June 1949',
-        //     weight: 56, email: 'cokahraman@hotmail.com', address: '141 NorthWood Way, London, HA6 1RF', userName: 'davedavid' });
-        //   carer.save((error, newCarer) => {
-        //     chai.request(app)
-        //       .put(`/api/carer/${newCarer.id}`)
-        //       .send({ userName: 'User 2' })
-        //       .end((err, res) => {
-        //         res.should.have.status(200);
-        //         done();
-        //       });
-        //   });
-        // });
-        //
-        // it('should delete a carer by its id', done => {
-        //   const carer = new Carer({ userName: 'User', email: 'user@example.com' });
-        //   carer.save((error, newCarer) => {
-        //     chai.request(app)
-        //       .delete(`/api/carer/${newCarer.id}`)
-        //       .end((err, res) => {
-        //         res.should.have.status(200);
-        //         done();
-        //       });
-        //   });
-        // });
+        it('should get a carer by its id', done => {
+            const carer = new carer_1.default({ firstName: 'Dave', lastName: 'David', gender: 'M', dob: '1949-06-13',
+                email: 'cokahraman@hotmail.com', phone: '7777777777', addressLine1: '141 NorthWood Way, London, HA6 1RF' });
+            carer.save((error, newCarer) => {
+                chai.request(app_1.app)
+                    .get(`/api/carer/${newCarer.id}`)
+                    .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('email');
+                    res.body.should.have.property('_id').eql(newCarer.id);
+                    done();
+                });
+            });
+        });
+        it('should update a carer by its id', done => {
+            const carer = new carer_1.default({ names: 'Dave', surname: 'David', gender: 'M', dob: '14 June 1949',
+                email: 'cokahraman@hotmail.com', addressLine1: '141 NorthWood Way, London, HA6 1RF' });
+            carer.save((error, newCarer) => {
+                chai.request(app_1.app)
+                    .put(`/api/carer/${newCarer.id}`)
+                    .send({ userName: 'User 2' })
+                    .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                });
+            });
+        });
+        it('should delete a carer by its id', done => {
+            const carer = new carer_1.default({ email: 'user@example.com' });
+            carer.save((error, newCarer) => {
+                chai.request(app_1.app)
+                    .delete(`/api/carer/${newCarer.id}`)
+                    .end((err, res) => {
+                    res.should.have.status(200);
+                    done();
+                });
+            });
+        });
     });
 });
 //# sourceMappingURL=carer.spec.js.map

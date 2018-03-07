@@ -14,7 +14,7 @@ app.use('/', express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const mongoDBURIString:string = process.env.MONGODB_URI || 'mongodb://root:root@ds251598.mlab.com:51598/drommcare/';
+const mongoDBURIString:string = process.env.MONGODB_URI;
 
 mongoose.connect(mongoDBURIString, function (err, response) {
   if (err) {
