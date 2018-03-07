@@ -42,7 +42,7 @@
     "nodemon": "1.11.0",
     "protractor": "~5.1.2",
     "tslint": "^5.9.1",
-    "ts-node": "~3.2.0"o
+    "ts-node": "~3.2.0",
     "typescript": "^2.7.2"
   }
 }
