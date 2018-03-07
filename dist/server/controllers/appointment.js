@@ -46,10 +46,15 @@ class AppointmentCtrl extends base_1.default {
                 }
                 let sum = 0;
                 docs.forEach(appointment => {
-                    const startDate = moment(appointment.start);
-                    const endDate = moment(appointment.end);
-                    const count = endDate.diff(startDate, 'hours');
-                    sum = sum + (count * appointment.rate);
+                    if (appointment.sleepover) {
+                        sum += appointment.sleepoverRate;
+                    }
+                    else {
+                        const startDate = moment(appointment.start);
+                        const endDate = moment(appointment.end);
+                        const count = endDate.diff(startDate, 'hours');
+                        sum = sum + (count * appointment.rate);
+                    }
                 });
                 res.status(200).json(sum);
             });
@@ -83,11 +88,16 @@ class AppointmentCtrl extends base_1.default {
                     let totalHour = 0;
                     let totalIncome = 0;
                     appointmentsMatching.forEach(appointment => {
-                        const startDate = moment(appointment.start);
-                        const endDate = moment(appointment.end);
-                        const count = endDate.diff(startDate, 'hours');
-                        totalHour = totalHour + (count);
-                        totalIncome = totalIncome + (count * appointment.rate);
+                        if (appointment.sleepover) {
+                            totalIncome += appointment.sleepoverRate;
+                        }
+                        else {
+                            const startDate = moment(appointment.start);
+                            const endDate = moment(appointment.end);
+                            const count = endDate.diff(startDate, 'hours');
+                            totalHour = totalHour + (count);
+                            totalIncome = totalIncome + (count * appointment.rate);
+                        }
                     });
                     weekdayReport.push(new Common_1.WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
                 }
@@ -116,11 +126,16 @@ class AppointmentCtrl extends base_1.default {
                     let totalHour = 0;
                     let totalIncome = 0;
                     appointmentsMatching.forEach(appointment => {
-                        const startDate = moment(appointment.start);
-                        const endDate = moment(appointment.end);
-                        const count = endDate.diff(startDate, 'hours');
-                        totalHour = totalHour + (count);
-                        totalIncome = totalIncome + (count * appointment.rate);
+                        if (appointment.sleepover) {
+                            totalIncome += appointment.sleepoverRate;
+                        }
+                        else {
+                            const startDate = moment(appointment.start);
+                            const endDate = moment(appointment.end);
+                            const count = endDate.diff(startDate, 'hours');
+                            totalHour = totalHour + (count);
+                            totalIncome = totalIncome + (count * appointment.rate);
+                        }
                     });
                     weekdayReport.push(new Common_1.WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
                 }

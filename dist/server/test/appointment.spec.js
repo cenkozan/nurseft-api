@@ -85,19 +85,19 @@ describe('Appointments', () => {
                 });
             });
         });
-    });
-    it('should return appointments by carers', done => {
-        const appointment1 = new appointment_1.default({ title: 'joe', carer: 'joe' });
-        const appointment2 = new appointment_1.default({ title: 'joe2', carer: 'joe' });
-        appointment1.save((error, newAppointment1) => {
-            appointment2.save((error2, newAppointment2) => {
-                chai.request(app_1.app)
-                    .get(`/api/appointment/carer/${newAppointment2.carer}`)
-                    .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('array');
-                    res.body.length.should.be.eql(2);
-                    done();
+        it('should return appointments by carers', done => {
+            const appointment1 = new appointment_1.default({ title: 'joe', carer: 'joe' });
+            const appointment2 = new appointment_1.default({ title: 'joe2', carer: 'joe' });
+            appointment1.save((error, newAppointment1) => {
+                appointment2.save((error2, newAppointment2) => {
+                    chai.request(app_1.app)
+                        .get(`/api/appointment/carer/${newAppointment2.carer}`)
+                        .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('array');
+                        res.body.length.should.be.eql(2);
+                        done();
+                    });
                 });
             });
         });

@@ -7,11 +7,11 @@ const app_1 = require("../app");
 const carer_1 = require("../models/carer");
 const should = chai.use(chaiHttp).should();
 describe('Carers', () => {
-    // beforeEach(done => {
-    //   Carer.remove({}, err => {
-    //     done();
-    //   });
-    // });
+    beforeEach(done => {
+        carer_1.default.remove({}, err => {
+            done();
+        });
+    });
     describe('Backend tests for carers', () => {
         it('should get all the carers', done => {
             chai.request(app_1.app)

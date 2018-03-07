@@ -54,7 +54,6 @@ describe('Users', () => {
                     .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('username');
                     res.body.should.have.property('role');
                     res.body.should.have.property('_id').eql(newUser.id);
                     done();

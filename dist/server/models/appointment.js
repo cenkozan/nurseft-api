@@ -5,9 +5,10 @@ const AppointmentSchema = new mongoose.Schema({
     title: String,
     start: Date,
     end: Date,
-    allDay: Boolean,
+    sleepover: Boolean,
     dow: String,
     rate: Number,
+    sleepoverRate: Number,
     carer: String,
     client: String
 });

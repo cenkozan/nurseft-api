@@ -7,11 +7,11 @@ const app_1 = require("../app");
 const client_1 = require("../models/client");
 const should = chai.use(chaiHttp).should();
 describe('Clients', () => {
-    // beforeEach(done => {
-    //   Client.remove({}, err => {
-    //     done();
-    //   });
-    // });
+    beforeEach(done => {
+        client_1.default.remove({}, err => {
+            done();
+        });
+    });
     describe('Backend tests for clients', () => {
         it('should get all the clients', done => {
             chai.request(app_1.app)
