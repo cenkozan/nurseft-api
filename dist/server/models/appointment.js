@@ -8,7 +8,6 @@ const AppointmentSchema = new mongoose.Schema({
     sleepover: Boolean,
     dow: String,
     rate: Number,
-    sleepoverRate: Number,
     carer: String,
     client: String
 });
