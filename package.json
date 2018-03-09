@@ -29,7 +29,8 @@
     "morgan": "^1.9.0",
     "npm": "^5.7.1",
     "rxjs": "^5.4.2",
-    "tether": "1.4.0"
+    "tether": "1.4.0",
+    "mongo-uuid": "latest"
   },
   "devDependencies": {
     "@types/jasmine": "~2.5.53",

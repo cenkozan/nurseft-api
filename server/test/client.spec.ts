@@ -9,11 +9,11 @@ const should = chai.use(chaiHttp).should();
 
 describe('Clients', () => {
 
-  beforeEach(done => {
-    Client.remove({}, err => {
-      done();
-    });
-  });
+  // beforeEach(done => {
+  //   Client.remove({}, err => {
+  //     done();
+  //   });
+  // });
 
   describe('Backend tests for clients', () => {
 
