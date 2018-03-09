@@ -115,7 +115,7 @@ export default class ClientCtrl extends BaseCtrl {
         return console.error(err);
       }
       if (doc.incidents) {
-        if (doc.incidents.indexOf(req.body) !== -1) {
+        if (doc.incidents.indexOf(req.params.incident_id) !== -1) {
           doc.incidents.splice(doc.incidents.indexOf(req.body));
           doc.save(function (err, data) {
             if (err) {
