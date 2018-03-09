@@ -87,8 +87,44 @@ class ClientCtrl extends base_1.default {
                     if (err) {
                         return console.error(err);
                     }
-                    res.json(data);
+                    res.json(data.incidents);
                 });
+            });
+        };
+        this.updateIncident = (req, res) => {
+            this.model.findById(req.params.id, (err, doc) => {
+                if (err) {
+                    return console.error(err);
+                }
+                if (doc.incidents) {
+                    if (doc.incidents.indexOf(req.body) !== -1) {
+                        doc.incidents.splice(doc.incidents.indexOf(req.body));
+                        doc.save(function (err, data) {
+                            if (err) {
+                                return console.error(err);
+                            }
+                            res.json(data);
+                        });
+                    }
+                }
+            });
+        };
+        this.deleteIncident = (req, res) => {
+            this.model.findById(req.params.id, (err, doc) => {
+                if (err) {
+                    return console.error(err);
+                }
+                if (doc.incidents) {
+                    if (doc.incidents.indexOf(req.body) !== -1) {
+                        doc.incidents.splice(doc.incidents.indexOf(req.body));
+                        doc.save(function (err, data) {
+                            if (err) {
+                                return console.error(err);
+                            }
+                            res.json(data);
+                        });
+                    }
+                }
             });
         };
     }

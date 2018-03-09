@@ -27,6 +27,8 @@ export default function setRoutes(app) {
   router.route('/client/:id/blood-pressure').put(clientCtrl.insertBloodPressure);
   router.route('/client/:id/weight').put(clientCtrl.insertWeight);
   router.route('/client/:id/incident').put(clientCtrl.insertIncident);
+  router.route('/client/:id/incident/:id').put(clientCtrl.updateIncident);
+  router.route('/client/:id/incident').delete(clientCtrl.deleteIncident);
 
   // Carers
   router.route('/carers').get(carerCtrl.getAll);
