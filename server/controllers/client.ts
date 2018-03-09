@@ -140,5 +140,36 @@ export default class ClientCtrl extends BaseCtrl {
     });
   };
 
+  deleteFileInIncident = (req, res) => {
+    this.model.findById(req.params.id, (err, doc) => {
+      if (err) {
+        return console.error(err);
+      }
+      if (doc.incidents) {
+        let found = false;
+        doc.incidents.forEach(incident => {
+          if (incident._id == req.params.incident_id) {
+            for(let i = 0; i < incident.files.length; i++) {
+              if (incident.files[i]._id == req.params.file_id) {
+                found = true;
+                incident.files.splice(i, 1);
+                doc.save(function (err, data) {
+                  if (err) {
+                    return console.error(err);
+                  }
+                  res.status(200).json(data.incidents);
+                });
+                return;
+              }
+            }
+          }
+        });
+        if (!found) {
+          res.sendStatus(400);
+        }
+      }
+    });
+  };
+
 }
 

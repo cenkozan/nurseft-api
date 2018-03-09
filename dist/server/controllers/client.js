@@ -139,6 +139,41 @@ class ClientCtrl extends base_1.default {
                 }
             });
         };
+        this.deleteFileInIncident = (req, res) => {
+            this.model.findById(req.params.id, (err, doc) => {
+                if (err) {
+                    return console.error(err);
+                }
+                if (doc.incidents) {
+                    let found = false;
+                    doc.incidents.forEach(incident => {
+                        if (incident._id == req.params.incident_id) {
+                            for (let i = 0; i < incident.files.length; i++) {
+                                if (incident.files[i]._id == req.params.file_id) {
+                                    console.debug('file id: ', incident.files[i]._id);
+                                    console.debug('params: ', req.params.file_id);
+                                    found = true;
+                                    console.debug('here is the index: ', i);
+                                    console.debug('here are files before: ', incident.files);
+                                    incident.files.splice(i, 1);
+                                    console.debug('here are files after: ', incident.files);
+                                    doc.save(function (err, data) {
+                                        if (err) {
+                                            return console.error(err);
+                                        }
+                                        res.status(200).json(data.incidents);
+                                    });
+                                    return;
+                                }
+                            }
+                        }
+                    });
+                    if (!found) {
+                        res.sendStatus(400);
+                    }
+                }
+            });
+        };
     }
 }
 exports.default = ClientCtrl;
