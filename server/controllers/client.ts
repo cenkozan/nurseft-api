@@ -115,14 +115,22 @@ export default class ClientCtrl extends BaseCtrl {
         return console.error(err);
       }
       if (doc.incidents) {
-        if (doc.incidents.indexOf(req.params.incident_id) !== -1) {
-          doc.incidents.splice(doc.incidents.indexOf(req.body));
-          doc.save(function (err, data) {
-            if (err) {
-              return console.error(err);
-            }
-            res.json(data);
-          });
+        let found = false;
+        doc.incidents.forEach(incident => {
+          if (incident._id == req.params.incident_id) {
+            found = true;
+            doc.incidents.splice(doc.incidents.indexOf(req.body));
+            console.debug('here is before save: ', doc);
+            doc.save(function (err, data) {
+              if (err) {
+                return console.error(err);
+              }
+              res.status(200).json(data.incidents);
+            });
+          }
+        });
+        if (!found) {
+          res.sendStatus(400);
         }
       }
     });
