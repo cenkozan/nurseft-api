@@ -20,7 +20,7 @@ const clientSchema = new mongoose.Schema({
     bloodPressures: [{ date: Date, systolic: Number, diastolic: Number }],
     weights: [{ date: Date, weight: Number, metrics: String }],
     temperatures: [{ date: Date, temperature: Number }],
-    incidents: [{ date: Date, description: String, files: [{ fileId: String, fileName: String }] }]
+    incidents: [{ date: Date, description: String, files: [{ fileId: String }] }]
 });
 const Client = mongoose.model('Client', clientSchema);
 exports.default = Client;
