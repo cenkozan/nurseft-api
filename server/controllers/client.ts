@@ -78,8 +78,7 @@ export default class ClientCtrl extends BaseCtrl {
         return console.error(err);
       }
       const incidentToInsert = req.body;
-      const id = mongoose.Types.ObjectId();
-      incidentToInsert._id = id;
+      incidentToInsert._id = mongoose.Types.ObjectId();
       if (docs.incidents) {
         docs.incidents.push(incidentToInsert);
       } else {
@@ -89,7 +88,7 @@ export default class ClientCtrl extends BaseCtrl {
         if (err) {
           return console.error(err);
         }
-        res.json(incidentToInsert);
+        res.json(docs.incidents.find(i => i._id === incidentToInsert._id));
       });
     });
   };
