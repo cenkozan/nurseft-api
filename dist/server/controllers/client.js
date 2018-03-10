@@ -122,8 +122,7 @@ class ClientCtrl extends base_1.default {
                     doc.incidents.forEach(incident => {
                         if (incident._id == req.params.incident_id) {
                             found = true;
-                            doc.incidents.splice(doc.incidents.indexOf(req.body));
-                            console.debug('here is before save: ', doc);
+                            doc.incidents.splice(doc.incidents.findIndex(i => i._id == req.params.incident_id), 1);
                             doc.save(function (err, data) {
                                 if (err) {
                                     return console.error(err);
