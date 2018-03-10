@@ -9,11 +9,11 @@ const should = chai.use(chaiHttp).should();
 
 describe('Users', () => {
 
-  beforeEach(done => {
-    User.remove({}, err => {
-      done();
-    });
-  });
+  // beforeEach(done => {
+  //   User.remove({}, err => {
+  //     done();
+  //   });
+  // });
 
   describe('Backend tests for users', () => {
 
@@ -39,19 +39,19 @@ describe('Users', () => {
         });
     });
 
-    it('should create new user', done => {
-      const user = { username: 'Dave', email: 'dave@example.com', role: 'user' };
-      chai.request(app)
-        .post('/api/user')
-        .send(user)
-        .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.should.have.a.property('email');
-          res.body.should.have.a.property('role');
-          done();
-        });
-    });
+    // it('should create new user', done => {
+    //   const user = { username: 'Dave', email: 'dave@example.com', role: 'user' };
+    //   chai.request(app)
+    //     .post('/api/user')
+    //     .send(user)
+    //     .end((err, res) => {
+    //       res.should.have.status(200);
+    //       res.body.should.be.a('object');
+    //       res.body.should.have.a.property('email');
+    //       res.body.should.have.a.property('role');
+    //       done();
+    //     });
+    // });
 
     it('should get a user by its id', done => {
       const user = new User({ username: 'User', email: 'user@example.com', role: 'user' });

@@ -7,11 +7,11 @@ const app_1 = require("../app");
 const appointment_1 = require("../models/appointment");
 const should = chai.use(chaiHttp).should();
 describe('Appointments', () => {
-    beforeEach(done => {
-        appointment_1.default.remove({}, err => {
-            done();
-        });
-    });
+    // beforeEach(done => {
+    //   Appointment.remove({}, err => {
+    //     done();
+    //   });
+    // });
     describe('Backend tests for appointments', () => {
         it('should get all the appointments', done => {
             chai.request(app_1.app)
@@ -33,21 +33,21 @@ describe('Appointments', () => {
                 done();
             });
         });
-        it('should create new appointment', done => {
-            const appointment = new appointment_1.default({ title: 'joe', start: new Date(), end: new Date(), dow: 'joe', client: 'joe', carer: 'joe' });
-            chai.request(app_1.app)
-                .post('/api/appointment')
-                .send(appointment)
-                .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.be.a('object');
-                res.body.should.have.a.property('title');
-                res.body.should.have.a.property('start');
-                res.body.should.have.a.property('end');
-                res.body.should.have.a.property('dow');
-                done();
-            });
-        });
+        // it('should create new appointment', done => {
+        //   const appointment = new Appointment ({ title: 'joe', start: new Date(), end: new Date(), dow: 'joe', client: 'joe', carer: 'joe'});
+        //   chai.request(app)
+        //     .post('/api/appointment')
+        //     .send(appointment)
+        //     .end((err, res) => {
+        //       res.should.have.status(200);
+        //       res.body.should.be.a('object');
+        //       res.body.should.have.a.property('title');
+        //       res.body.should.have.a.property('start');
+        //       res.body.should.have.a.property('end');
+        //       res.body.should.have.a.property('dow');
+        //       done();
+        //     });
+        // });
         it('should get a appointment by its id', done => {
             const appointment = new appointment_1.default({ title: 'joe' });
             appointment.save((error, newAppointment) => {

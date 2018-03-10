@@ -7,11 +7,11 @@ const app_1 = require("../app");
 const cat_1 = require("../models/cat");
 const should = chai.use(chaiHttp).should();
 describe('Cats', () => {
-    beforeEach(done => {
-        cat_1.default.remove({}, err => {
-            done();
-        });
-    });
+    // beforeEach(done => {
+    //   Cat.remove({}, err => {
+    //     done();
+    //   });
+    // });
     describe('Backend tests for cats', () => {
         it('should get all the cats', done => {
             chai.request(app_1.app)

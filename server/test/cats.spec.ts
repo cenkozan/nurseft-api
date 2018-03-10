@@ -9,11 +9,11 @@ const should = chai.use(chaiHttp).should();
 
 describe('Cats', () => {
 
-  beforeEach(done => {
-    Cat.remove({}, err => {
-      done();
-    });
-  });
+  // beforeEach(done => {
+  //   Cat.remove({}, err => {
+  //     done();
+  //   });
+  // });
 
   describe('Backend tests for cats', () => {
 
