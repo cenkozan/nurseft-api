@@ -87,7 +87,7 @@ class ClientCtrl extends base_1.default {
                     if (err) {
                         return console.error(err);
                     }
-                    res.json(data);
+                    res.json(data.incidents);
                 });
             });
         };
