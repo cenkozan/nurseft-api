@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("../models/client");
 const base_1 = require("./base");
+const mongoose = require("mongoose");
 class ClientCtrl extends base_1.default {
     constructor() {
         super(...arguments);
@@ -77,17 +78,20 @@ class ClientCtrl extends base_1.default {
                 if (err) {
                     return console.error(err);
                 }
+                const incidentToInsert = req.body;
+                const id = mongoose.Types.ObjectId();
+                incidentToInsert._id = id;
                 if (docs.incidents) {
-                    docs.incidents.push(req.body);
+                    docs.incidents.push(incidentToInsert);
                 }
                 else {
-                    docs.incidents = [req.body];
+                    docs.incidents = [incidentToInsert];
                 }
                 docs.save(function (err, data) {
                     if (err) {
                         return console.error(err);
                     }
-                    res.json(data.incidents);
+                    res.json(incidentToInsert);
                 });
             });
         };

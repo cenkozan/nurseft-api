@@ -1,5 +1,6 @@
 import Client from '../models/client';
 import BaseCtrl from './base';
+import * as mongoose from 'mongoose';
 
 export default class ClientCtrl extends BaseCtrl {
   model = Client;
@@ -76,16 +77,19 @@ export default class ClientCtrl extends BaseCtrl {
       if (err) {
         return console.error(err);
       }
+      const incidentToInsert = req.body;
+      const id = mongoose.Types.ObjectId();
+      incidentToInsert._id = id;
       if (docs.incidents) {
-        docs.incidents.push(req.body);
+        docs.incidents.push(incidentToInsert);
       } else {
-        docs.incidents = [req.body];
+        docs.incidents = [incidentToInsert];
       }
       docs.save(function (err, data) {
         if (err) {
           return console.error(err);
         }
-        res.json(data.incidents);
+        res.json(incidentToInsert);
       });
     });
   };
