@@ -6,6 +6,7 @@ const client_1 = require("./controllers/client");
 const user_1 = require("./controllers/user");
 const carer_1 = require("./controllers/carer");
 const appointment_1 = require("./controllers/appointment");
+const invoice_1 = require("./controllers/invoice");
 function setRoutes(app) {
     const router = express.Router();
     const catCtrl = new cat_1.default();
@@ -13,6 +14,7 @@ function setRoutes(app) {
     const carerCtrl = new carer_1.default();
     const userCtrl = new user_1.default();
     const appointmentCtrl = new appointment_1.default();
+    const invoiceCtrl = new invoice_1.default();
     // Clients
     router.route('/clients').get(clientCtrl.getAll);
     router.route('/clients/count').get(clientCtrl.count);
@@ -63,6 +65,14 @@ function setRoutes(app) {
     router.route('/appointment/reports/total-revenue').get(appointmentCtrl.countTotalRevenue);
     router.route('/appointment/reports/weekly-report').get(appointmentCtrl.getWeeklyReport);
     router.route('/appointment/carer/:id/reports/weekly-report').get(appointmentCtrl.getWeeklyReportByCarer);
+    // Invoice
+    router.route('/invoices').get(invoiceCtrl.getAll);
+    router.route('/invoices/count').get(invoiceCtrl.count);
+    router.route('/invoice').post(invoiceCtrl.insert);
+    router.route('/invoice/:id').get(invoiceCtrl.get);
+    router.route('/invoice/:id').put(invoiceCtrl.update);
+    router.route('/invoice/:id').delete(invoiceCtrl.delete);
+    router.route('/invoice/client/:id').get(invoiceCtrl.getByClient);
     // Apply the routes to our application with the prefix /api
     app.use('/api', router);
 }

@@ -5,6 +5,7 @@ import ClientCtrl from './controllers/client';
 import UserCtrl from './controllers/user';
 import CarerCtrl from './controllers/carer';
 import AppointmentCtrl from './controllers/appointment';
+import InvoiceCtrl from './controllers/invoice';
 
 export default function setRoutes(app) {
 
@@ -15,6 +16,7 @@ export default function setRoutes(app) {
   const carerCtrl = new CarerCtrl();
   const userCtrl = new UserCtrl();
   const appointmentCtrl = new AppointmentCtrl();
+  const invoiceCtrl = new InvoiceCtrl();
 
   // Clients
   router.route('/clients').get(clientCtrl.getAll);
@@ -70,6 +72,15 @@ export default function setRoutes(app) {
   router.route('/appointment/reports/total-revenue').get(appointmentCtrl.countTotalRevenue);
   router.route('/appointment/reports/weekly-report').get(appointmentCtrl.getWeeklyReport);
   router.route('/appointment/carer/:id/reports/weekly-report').get(appointmentCtrl.getWeeklyReportByCarer);
+
+  // Invoice
+  router.route('/invoices').get(invoiceCtrl.getAll);
+  router.route('/invoices/count').get(invoiceCtrl.count);
+  router.route('/invoice').post(invoiceCtrl.insert);
+  router.route('/invoice/:id').get(invoiceCtrl.get);
+  router.route('/invoice/:id').put(invoiceCtrl.update);
+  router.route('/invoice/:id').delete(invoiceCtrl.delete);
+  router.route('/invoice/client/:id').get(invoiceCtrl.getByClient);
 
   // Apply the routes to our application with the prefix /api
   app.use('/api', router);
