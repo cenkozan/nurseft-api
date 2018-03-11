@@ -7,7 +7,7 @@ class InvoiceCtrl extends base_1.default {
         super(...arguments);
         this.model = invoice_1.default;
         this.getByClient = (req, res) => {
-            this.model.find({ client: req.body.id }, (err, invoices) => {
+            this.model.find({ client: req.params.id }, (err, invoices) => {
                 if (err)
                     return err;
                 res.status(200).json(invoices);
