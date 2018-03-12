@@ -19,7 +19,7 @@ class UserCtrl extends base_1.default {
                     }
                     const token = jwt.sign({ user: user }, process.env.SECRET_TOKEN); // , { expiresIn: 10 } seconds
                     userEndpoints_1.default.findOne({ user: user._id }, (err, userEndpoint) => {
-                        res.status(200).json({ token: token, endpoint: userEndpoint.endpoint });
+                        res.status(200).json({ token: token, endpoint: userEndpoint ? userEndpoint.endpoint : null });
                     });
                 });
             });
