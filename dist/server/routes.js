@@ -7,6 +7,7 @@ const user_1 = require("./controllers/user");
 const carer_1 = require("./controllers/carer");
 const appointment_1 = require("./controllers/appointment");
 const invoice_1 = require("./controllers/invoice");
+const userEndpoint_1 = require("./controllers/userEndpoint");
 function setRoutes(app) {
     const router = express.Router();
     const catCtrl = new cat_1.default();
@@ -15,6 +16,7 @@ function setRoutes(app) {
     const userCtrl = new user_1.default();
     const appointmentCtrl = new appointment_1.default();
     const invoiceCtrl = new invoice_1.default();
+    const userEndPointCtrl = new userEndpoint_1.default();
     // Clients
     router.route('/clients').get(clientCtrl.getAll);
     router.route('/clients/count').get(clientCtrl.count);
@@ -51,6 +53,8 @@ function setRoutes(app) {
     router.route('/user/:id').get(userCtrl.get);
     router.route('/user/:id').put(userCtrl.update);
     router.route('/user/:id').delete(userCtrl.delete);
+    // User Endpoint
+    router.route('/user/:id/endpoint').post(userEndPointCtrl.insert);
     // Appointment
     router.route('/appointments').get(appointmentCtrl.getAll);
     router.route('/appointments/count').get(appointmentCtrl.count);

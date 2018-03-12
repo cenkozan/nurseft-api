@@ -6,6 +6,7 @@ import UserCtrl from './controllers/user';
 import CarerCtrl from './controllers/carer';
 import AppointmentCtrl from './controllers/appointment';
 import InvoiceCtrl from './controllers/invoice';
+import UserEndpointCtrl from './controllers/userEndpoint';
 
 export default function setRoutes(app) {
 
@@ -17,6 +18,7 @@ export default function setRoutes(app) {
   const userCtrl = new UserCtrl();
   const appointmentCtrl = new AppointmentCtrl();
   const invoiceCtrl = new InvoiceCtrl();
+  const userEndPointCtrl = new UserEndpointCtrl();
 
   // Clients
   router.route('/clients').get(clientCtrl.getAll);
@@ -57,6 +59,9 @@ export default function setRoutes(app) {
   router.route('/user/:id').get(userCtrl.get);
   router.route('/user/:id').put(userCtrl.update);
   router.route('/user/:id').delete(userCtrl.delete);
+
+  // User Endpoint
+  router.route('/user/:id/endpoint').post(userEndPointCtrl.insert);
 
   // Appointment
   router.route('/appointments').get(appointmentCtrl.getAll);

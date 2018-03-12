@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const jwt = require("jsonwebtoken");
 const user_1 = require("../models/user");
+const userEndpoints_1 = require("../models/userEndpoints");
 const base_1 = require("./base");
 class UserCtrl extends base_1.default {
     constructor() {
@@ -17,7 +18,9 @@ class UserCtrl extends base_1.default {
                         return res.sendStatus(403);
                     }
                     const token = jwt.sign({ user: user }, process.env.SECRET_TOKEN); // , { expiresIn: 10 } seconds
-                    res.status(200).json({ token: token });
+                    userEndpoints_1.default.findOne({ user: user._id }, (err, userEndpoint) => {
+                        res.status(200).json({ token: token, endpoint: userEndpoint.endpoint });
+                    });
                 });
             });
         };
