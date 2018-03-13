@@ -2,8 +2,6 @@ import BaseCtrl from './base';
 import Appointment from '../models/appointment';
 import * as moment from 'moment';
 import { WeekdayReportItem} from '../Common';
-import {app} from '../app';
-import arrayContaining = jasmine.arrayContaining;
 
 export default class AppointmentCtrl extends BaseCtrl {
   model = Appointment;
@@ -64,6 +62,15 @@ export default class AppointmentCtrl extends BaseCtrl {
 
   getAppointmentsOfClientInDateRange = (req, res) => {
     this.model.find({client: req.params.id, start: {$gte: req.params.start}, end: {$lte: req.params.end}}, (err, docs) => {
+      if (err) {
+        return console.error(err);
+      }
+      res.status(200).json(docs);
+    });
+  };
+
+  getAppointmentsOfCarerInDateRange = (req, res) => {
+    this.model.find({carer: req.params.id, start: {$gte: req.params.start}, end: {$lte: req.params.end}}, (err, docs) => {
       if (err) {
         return console.error(err);
       }
@@ -147,31 +154,25 @@ export default class AppointmentCtrl extends BaseCtrl {
   };
 
   getCarerWorkDoneAllClientsBetweenTimePeriod = (req, res) => {
-    this.model.find({carer: req.params.id, start: {$gte: req.params.start}, end: {$lte: req.params.end}}, (err, docs) => {
+    this.model.find({carer: req.params.id, start: {$gte: req.params.start}, end: {$lte: req.params.end}}, (err, appointments) => {
       if (err) {
         return console.error(err);
       }
-      docs.forEach(function(appointment, index, array) {
-
+      let sum = 0;
+      appointments.forEach(function(appointment, index, array) {
+        console.log('here is the appointment: ',  appointment);
+        const startDate = moment(appointment.start);
+        const endDate = moment(appointment.end);
+        const diffInHours = endDate.diff(startDate, 'hours');
+        console.log('diffInhours: ', diffInHours);
+        const diffInMinutes = endDate.diff(startDate, 'minutes');
+        console.log('diffInMinutes: ', diffInMinutes);
+        const amount = Math.floor((appointment.rate*diffInHours + (appointment.rate/60)*diffInMinutes)*100) / 100;
+        console.log('amount is: ', amount);
+        sum = sum + amount;
       });
-      res.status(200).json(docs);
+      res.status(200).json(sum);
     });
-  }
+  };
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

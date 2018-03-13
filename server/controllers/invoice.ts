@@ -11,4 +11,11 @@ export default class InvoiceCtrl extends BaseCtrl {
       res.status(200).json(invoices);
     })
   }
+
+  getLastInvoice = (req, res) => {
+    this.model.find((err, invoices) => {
+      if (err) return err;
+      res.status(200).json(invoices.sort().pop().invoiceId);
+    })
+  }
 }

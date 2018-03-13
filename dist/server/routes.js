@@ -65,15 +65,17 @@ function setRoutes(app) {
     router.route('/appointment/client/:id').get(appointmentCtrl.getAllByClient);
     router.route('/appointment/carer/:id').get(appointmentCtrl.getAllByCarer);
     router.route('/appointment/client/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfClientInDateRange);
+    router.route('/appointment/carer/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfCarerInDateRange);
     router.route('/appointment/reports/total-hours').get(appointmentCtrl.countTotalHours);
     router.route('/appointment/reports/total-revenue').get(appointmentCtrl.countTotalRevenue);
     router.route('/appointment/reports/weekly-report').get(appointmentCtrl.getWeeklyReport);
     router.route('/appointment/carer/:id/reports/weekly-report').get(appointmentCtrl.getWeeklyReportByCarer);
-    router.route('/appointment/carer/:id/reports/start/:startDate/end/:endDate').get(appointmentCtrl.getCarerWorkDoneAllClientsBetweenTimePeriod);
+    router.route('/appointment/carer/:id/reports/owed/:start/:end').get(appointmentCtrl.getCarerWorkDoneAllClientsBetweenTimePeriod);
     // Invoice
     router.route('/invoices').get(invoiceCtrl.getAll);
     router.route('/invoices/count').get(invoiceCtrl.count);
     router.route('/invoice').post(invoiceCtrl.insert);
+    router.route('/invoice/latest').get(invoiceCtrl.getLastInvoice);
     router.route('/invoice/:id').get(invoiceCtrl.get);
     router.route('/invoice/:id').put(invoiceCtrl.update);
     router.route('/invoice/:id').delete(invoiceCtrl.delete);
