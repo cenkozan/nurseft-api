@@ -5,6 +5,7 @@ const InvoiceSchema = new mongoose.Schema({
     client: String,
     start: Date,
     end: Date,
+    total: Number,
     invoiceId: Number,
     content: String
 });

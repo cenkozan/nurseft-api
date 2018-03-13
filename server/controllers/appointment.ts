@@ -3,6 +3,7 @@ import Appointment from '../models/appointment';
 import * as moment from 'moment';
 import { WeekdayReportItem} from '../Common';
 import {app} from '../app';
+import arrayContaining = jasmine.arrayContaining;
 
 export default class AppointmentCtrl extends BaseCtrl {
   model = Appointment;
@@ -144,6 +145,18 @@ export default class AppointmentCtrl extends BaseCtrl {
       res.status(200).json(weekdayReport);
     });
   };
+
+  getCarerWorkDoneAllClientsBetweenTimePeriod = (req, res) => {
+    this.model.find({carer: req.params.id, start: {$gte: req.params.start}, end: {$lte: req.params.end}}, (err, docs) => {
+      if (err) {
+        return console.error(err);
+      }
+      docs.forEach(function(appointment, index, array) {
+
+      });
+      res.status(200).json(docs);
+    });
+  }
 
 }
 
