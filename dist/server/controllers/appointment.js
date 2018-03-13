@@ -75,7 +75,7 @@ class AppointmentCtrl extends base_1.default {
                 res.status(200).json(docs);
             });
         };
-        this.getDailyReport = (req, res) => {
+        this.getWeeklyReport = (req, res) => {
             let type = 'week';
             this.model.find({
                 start: { $gte: moment().startOf(type).add(1, 'days') },
@@ -115,7 +115,8 @@ class AppointmentCtrl extends base_1.default {
                 res.status(200).json(weekdayReport);
             });
         };
-        this.getWeeklyReport = (req, res) => {
+        this.getOssuruk = (req, res) => {
+            // getWeeklyReport = (req, res) => {
             let type = 'month';
             this.model.find({
                 start: { $gte: moment().startOf(type).add(1, 'months') },

@@ -68,7 +68,7 @@ function setRoutes(app) {
     router.route('/appointment/carer/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfCarerInDateRange);
     router.route('/appointment/reports/total-hours').get(appointmentCtrl.countTotalHours);
     router.route('/appointment/reports/total-revenue').get(appointmentCtrl.countTotalRevenue);
-    router.route('/appointment/reports/daily-report').get(appointmentCtrl.getDailyReport);
+    // router.route('/appointment/reports/daily-report').get(appointmentCtrl.getDailyReport);
     router.route('/appointment/reports/weekly-report').get(appointmentCtrl.getWeeklyReport);
     router.route('/appointment/reports/monthly-report').get(appointmentCtrl.getMonthlyReport);
     router.route('/appointment/carer/:id/reports/daily-report').get(appointmentCtrl.getDailyReportByCarer);

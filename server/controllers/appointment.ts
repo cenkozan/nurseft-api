@@ -78,7 +78,7 @@ export default class AppointmentCtrl extends BaseCtrl {
     });
   };
 
-  getDailyReport = (req, res) => {
+  getWeeklyReport = (req, res) => {
     let type: moment.unitOfTime.StartOf = 'week';
     this.model.find({
       start: {$gte: moment().startOf(type).add(1, 'days')},
@@ -118,7 +118,8 @@ export default class AppointmentCtrl extends BaseCtrl {
     });
   };
 
-  getWeeklyReport = (req, res) => {
+  getOssuruk = (req, res) => {
+  // getWeeklyReport = (req, res) => {
     let type: moment.unitOfTime.StartOf = 'month';
     this.model.find({
       start: {$gte: moment().startOf(type).add(1, 'months')},
