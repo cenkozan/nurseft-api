@@ -47,13 +47,13 @@ class AppointmentCtrl extends base_1.default {
                 let sum = 0;
                 docs.forEach(appointment => {
                     if (appointment.sleepover) {
-                        sum += appointment.sleepoverRate;
+                        sum = sum + appointment.rate;
                     }
                     else {
                         const startDate = moment(appointment.start);
                         const endDate = moment(appointment.end);
-                        const count = endDate.diff(startDate, 'hours');
-                        sum = sum + (count * appointment.rate);
+                        const count = endDate.diff(startDate, 'minutes');
+                        sum = sum + (count * (appointment.rate / 60));
                     }
                 });
                 res.status(200).json(sum);
@@ -75,9 +75,12 @@ class AppointmentCtrl extends base_1.default {
                 res.status(200).json(docs);
             });
         };
-        this.getWeeklyReport = (req, res) => {
+        this.getDailyReport = (req, res) => {
             let type = 'week';
-            this.model.find({ start: { $gte: moment().startOf(type).add(1, 'days') }, end: { $lte: moment().startOf(type).add(8, 'days') } }, (err, docs) => {
+            this.model.find({
+                start: { $gte: moment().startOf(type).add(1, 'days') },
+                end: { $lte: moment().startOf(type).add(8, 'days') }
+            }, (err, docs) => {
                 if (err) {
                     return console.error(err);
                 }
@@ -97,14 +100,14 @@ class AppointmentCtrl extends base_1.default {
                     let totalIncome = 0;
                     appointmentsMatching.forEach(appointment => {
                         if (appointment.sleepover) {
-                            totalIncome += appointment.sleepoverRate;
+                            totalIncome += appointment.rate;
                         }
                         else {
                             const startDate = moment(appointment.start);
                             const endDate = moment(appointment.end);
-                            const count = endDate.diff(startDate, 'hours');
-                            totalHour = totalHour + (count);
-                            totalIncome = totalIncome + (count * appointment.rate);
+                            const count = endDate.diff(startDate, 'minutes');
+                            totalHour = totalHour + count;
+                            totalIncome = totalIncome + (count * (appointment.rate / 60));
                         }
                     });
                     weekdayReport.push(new Common_1.WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
@@ -112,9 +115,93 @@ class AppointmentCtrl extends base_1.default {
                 res.status(200).json(weekdayReport);
             });
         };
-        this.getWeeklyReportByCarer = (req, res) => {
+        this.getWeeklyReport = (req, res) => {
+            let type = 'month';
+            this.model.find({
+                start: { $gte: moment().startOf(type).add(1, 'months') },
+                end: { $lte: moment().startOf(type).add(5, 'months') }
+            }, (err, docs) => {
+                if (err) {
+                    return console.error(err);
+                }
+                const weekdayReport = [];
+                const days = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'];
+                for (let i = 0; i <= 4; i++) {
+                    const appointmentsMatching = [];
+                    docs.forEach(appointment => {
+                        const startDate = moment(appointment.start);
+                        const endDate = moment(appointment.end);
+                        if (startDate.isAfter(moment().startOf(type).add(i + 1, 'weeks')) && moment(endDate).isBetween(moment().startOf(type).add(i, 'weeks'), moment().startOf(type).add(i + 2, 'weeks'))) {
+                            appointmentsMatching.push(appointment);
+                        }
+                    });
+                    let total = 0;
+                    let totalHour = 0;
+                    let totalIncome = 0;
+                    appointmentsMatching.forEach(appointment => {
+                        if (appointment.sleepover) {
+                            totalIncome += appointment.rate;
+                        }
+                        else {
+                            const startDate = moment(appointment.start);
+                            const endDate = moment(appointment.end);
+                            const count = endDate.diff(startDate, 'minutes');
+                            totalHour = totalHour + count;
+                            totalIncome = totalIncome + (count * (appointment.rate / 60));
+                        }
+                    });
+                    weekdayReport.push(new Common_1.WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
+                }
+                res.status(200).json(weekdayReport);
+            });
+        };
+        this.getMonthlyReport = (req, res) => {
             let type = 'week';
-            this.model.find({ carer: req.params.id, start: { $gte: moment().startOf(type).add(1, 'days') }, end: { $lte: moment().startOf(type).add(8, 'days') } }, (err, docs) => {
+            this.model.find({
+                start: { $gte: moment().startOf(type).add(1, 'days') },
+                end: { $lte: moment().startOf(type).add(8, 'days') }
+            }, (err, docs) => {
+                if (err) {
+                    return console.error(err);
+                }
+                const weekdayReport = [];
+                const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                for (let i = 0; i <= 6; i++) {
+                    const appointmentsMatching = [];
+                    docs.forEach(appointment => {
+                        const startDate = moment(appointment.start);
+                        const endDate = moment(appointment.end);
+                        if (startDate.isAfter(moment().startOf(type).add(i + 1, 'days')) && moment(endDate).isBetween(moment().startOf(type).add(i, 'days'), moment().startOf(type).add(i + 2, 'days'))) {
+                            appointmentsMatching.push(appointment);
+                        }
+                    });
+                    let total = 0;
+                    let totalHour = 0;
+                    let totalIncome = 0;
+                    appointmentsMatching.forEach(appointment => {
+                        if (appointment.sleepover) {
+                            totalIncome += appointment.rate;
+                        }
+                        else {
+                            const startDate = moment(appointment.start);
+                            const endDate = moment(appointment.end);
+                            const count = endDate.diff(startDate, 'minutes');
+                            totalHour = totalHour + count;
+                            totalIncome = totalIncome + (count * (appointment.rate / 60));
+                        }
+                    });
+                    weekdayReport.push(new Common_1.WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
+                }
+                res.status(200).json(weekdayReport);
+            });
+        };
+        this.getDailyReportByCarer = (req, res) => {
+            let type = 'week';
+            this.model.find({
+                carer: req.params.id,
+                start: { $gte: moment().startOf(type).add(1, 'days') },
+                end: { $lte: moment().startOf(type).add(8, 'days') }
+            }, (err, docs) => {
                 if (err) {
                     return console.error(err);
                 }
@@ -135,14 +222,14 @@ class AppointmentCtrl extends base_1.default {
                     let totalIncome = 0;
                     appointmentsMatching.forEach(appointment => {
                         if (appointment.sleepover) {
-                            totalIncome += appointment.sleepoverRate;
+                            totalIncome += appointment.rate;
                         }
                         else {
                             const startDate = moment(appointment.start);
                             const endDate = moment(appointment.end);
-                            const count = endDate.diff(startDate, 'hours');
+                            const count = endDate.diff(startDate, 'minutes');
                             totalHour = totalHour + (count);
-                            totalIncome = totalIncome + (count * appointment.rate);
+                            totalIncome = totalIncome + (count * (appointment.rate / 60));
                         }
                     });
                     weekdayReport.push(new Common_1.WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
