@@ -164,7 +164,7 @@ class AppointmentCtrl extends base_1.default {
                     console.log('diffInhours: ', diffInHours);
                     const diffInMinutes = endDate.diff(startDate, 'minutes');
                     console.log('diffInMinutes: ', diffInMinutes);
-                    const amount = Math.floor((appointment.rate * diffInHours + (appointment.rate / 60) * diffInMinutes) * 100) / 100;
+                    const amount = diffInMinutes * (appointment.rate / 60);
                     console.log('amount is: ', amount);
                     sum = sum + amount;
                 });
