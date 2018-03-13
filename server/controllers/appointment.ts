@@ -160,16 +160,14 @@ export default class AppointmentCtrl extends BaseCtrl {
       }
       let sum = 0;
       appointments.forEach(function(appointment, index, array) {
-        console.log('here is the appointment: ',  appointment);
-        const startDate = moment(appointment.start);
-        const endDate = moment(appointment.end);
-        const diffInHours = endDate.diff(startDate, 'hours');
-        console.log('diffInhours: ', diffInHours);
-        const diffInMinutes = endDate.diff(startDate, 'minutes');
-        console.log('diffInMinutes: ', diffInMinutes);
-        const amount = diffInMinutes * (appointment.rate/60)
-        console.log('amount is: ', amount);
-        sum = sum + amount;
+        if (appointment.sleepover) {
+          sum += appointment.rate;
+        } else {
+          const startDate = moment(appointment.start);
+          const endDate = moment(appointment.end);
+          const diffInMinutes = endDate.diff(startDate, 'minutes');
+          sum += diffInMinutes * (appointment.rate / 60);
+        }
       });
       res.status(200).json(sum);
     });
