@@ -67,19 +67,26 @@ export default function setRoutes(app) {
   router.route('/appointments').get(appointmentCtrl.getAll);
   router.route('/appointments/count').get(appointmentCtrl.count);
   router.route('/appointment').post(appointmentCtrl.insert);
+
+  // Appointment Reports
+  router.route('/appointment/reports/total-hours').get(appointmentCtrl.countTotalHours);
+  router.route('/appointment/reports/total-revenue').get(appointmentCtrl.countTotalRevenue);
+  router.route('/appointment/reports/daily-report').get(appointmentCtrl.getDailyReport);
+  router.route('/appointment/reports/weekly-report').get(appointmentCtrl.getWeeklyReport);
+  router.route('/appointment/reports/monthly-report').get(appointmentCtrl.getMonthlyReport);
+
+  // Appointment Client Carers
+  router.route('/appointment/client/:id').get(appointmentCtrl.getAllByClient);
+  router.route('/appointment/client/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfClientInDateRange);
+  router.route('/appointment/carer/:id').get(appointmentCtrl.getAllByCarer);
+  router.route('/appointment/carer/:id/reports/daily-report').get(appointmentCtrl.getDailyReportByCarer);
+  router.route('/appointment/carer/:id/reports/owed/:start/:end').get(appointmentCtrl.getCarerWorkDoneAllClientsBetweenTimePeriod);
+  router.route('/appointment/carer/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfCarerInDateRange);
+
+  // Ordering important !!!
   router.route('/appointment/:id').get(appointmentCtrl.get);
   router.route('/appointment/:id').put(appointmentCtrl.update);
   router.route('/appointment/:id').delete(appointmentCtrl.delete);
-  router.route('/appointment/client/:id').get(appointmentCtrl.getAllByClient);
-  router.route('/appointment/carer/:id').get(appointmentCtrl.getAllByCarer);
-  router.route('/appointment/client/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfClientInDateRange);
-  router.route('/appointment/carer/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfCarerInDateRange);
-  router.route('/appointment/reports/total-hours').get(appointmentCtrl.countTotalHours);
-  router.route('/appointment/reports/total-revenue').get(appointmentCtrl.countTotalRevenue);
-  router.route('/appointment/reports/weekly-report').get(appointmentCtrl.getWeeklyReport);
-  router.route('/appointment/reports/monthly-report').get(appointmentCtrl.getMonthlyReport);
-  router.route('/appointment/carer/:id/reports/daily-report').get(appointmentCtrl.getDailyReportByCarer);
-  router.route('/appointment/carer/:id/reports/owed/:start/:end').get(appointmentCtrl.getCarerWorkDoneAllClientsBetweenTimePeriod);
 
   // Invoice
   router.route('/invoices').get(invoiceCtrl.getAll);

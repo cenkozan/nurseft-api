@@ -115,8 +115,7 @@ class AppointmentCtrl extends base_1.default {
                 res.status(200).json(weekdayReport);
             });
         };
-        this.getOssuruk = (req, res) => {
-            // getWeeklyReport = (req, res) => {
+        this.getDailyReport = (req, res) => {
             let type = 'month';
             this.model.find({
                 start: { $gte: moment().startOf(type).add(1, 'months') },

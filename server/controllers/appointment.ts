@@ -118,8 +118,7 @@ export default class AppointmentCtrl extends BaseCtrl {
     });
   };
 
-  getOssuruk = (req, res) => {
-  // getWeeklyReport = (req, res) => {
+  getDailyReport = (req, res) => {
     let type: moment.unitOfTime.StartOf = 'month';
     this.model.find({
       start: {$gte: moment().startOf(type).add(1, 'months')},
