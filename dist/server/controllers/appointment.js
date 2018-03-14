@@ -195,7 +195,7 @@ class AppointmentCtrl extends base_1.default {
                 res.status(200).json(weekdayReport);
             });
         };
-        this.getDailyReportByCarer = (req, res) => {
+        this.getWeeklyReportByCarer = (req, res) => {
             let type = 'week';
             this.model.find({
                 carer: req.params.id,

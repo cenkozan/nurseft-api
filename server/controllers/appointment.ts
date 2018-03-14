@@ -198,7 +198,7 @@ export default class AppointmentCtrl extends BaseCtrl {
     });
   };
 
-  getDailyReportByCarer = (req, res) => {
+  getWeeklyReportByCarer = (req, res) => {
     let type: moment.unitOfTime.StartOf = 'week';
     this.model.find({
       carer: req.params.id,
