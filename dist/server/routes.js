@@ -67,10 +67,10 @@ function setRoutes(app) {
     router.route('/appointment/reports/monthly-report').get(appointmentCtrl.getMonthlyReport);
     // Appointment Client Carers
     router.route('/appointment/client/:id').get(appointmentCtrl.getAllByClient);
-    router.route('/appointment/client/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfClientInDateRange);
-    router.route('/appointment/carer/:id').get(appointmentCtrl.getAllByCarer);
     router.route('/appointment/carer/:id/reports/daily-report').get(appointmentCtrl.getDailyReportByCarer);
     router.route('/appointment/carer/:id/reports/owed/:start/:end').get(appointmentCtrl.getCarerWorkDoneAllClientsBetweenTimePeriod);
+    router.route('/appointment/client/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfClientInDateRange);
+    router.route('/appointment/carer/:id').get(appointmentCtrl.getAllByCarer);
     router.route('/appointment/carer/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfCarerInDateRange);
     // Ordering important !!!
     router.route('/appointment/:id').get(appointmentCtrl.get);
