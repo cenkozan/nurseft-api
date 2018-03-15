@@ -33,10 +33,10 @@ class AppointmentCtrl extends base_1.default {
                 docs.forEach(appointment => {
                     const startDate = moment(appointment.start);
                     const endDate = moment(appointment.end);
-                    const count = endDate.diff(startDate, 'minutes') / 60;
+                    const count = endDate.diff(startDate, 'minutes');
                     sum = sum + count;
                 });
-                res.status(200).json(sum);
+                res.status(200).json(Math.floor(sum / 60));
             });
         };
         this.countTotalRevenue = (req, res) => {
@@ -56,7 +56,7 @@ class AppointmentCtrl extends base_1.default {
                         sum = sum + (count * (appointment.rate / 60));
                     }
                 });
-                res.status(200).json(sum);
+                res.status(200).json(Math.floor(sum));
             });
         };
         this.getAppointmentsOfClientInDateRange = (req, res) => {
