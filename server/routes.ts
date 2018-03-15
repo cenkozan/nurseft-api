@@ -71,7 +71,7 @@ export default function setRoutes(app) {
   // Appointment Reports
   router.route('/appointment/reports/total-hours').get(appointmentCtrl.countTotalHours);
   router.route('/appointment/reports/total-revenue').get(appointmentCtrl.countTotalRevenue);
-  router.route('/appointment/reports/daily-report').get(appointmentCtrl.getDailyReport);
+  // router.route('/appointment/reports/daily-report').get(appointmentCtrl.getDailyReport);
   router.route('/appointment/reports/weekly-report').get(appointmentCtrl.getWeeklyReport);
   router.route('/appointment/reports/monthly-report').get(appointmentCtrl.getMonthlyReport);
 
