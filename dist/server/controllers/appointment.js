@@ -33,7 +33,7 @@ class AppointmentCtrl extends base_1.default {
                 docs.forEach(appointment => {
                     const startDate = moment(appointment.start);
                     const endDate = moment(appointment.end);
-                    const count = endDate.diff(startDate, 'hours');
+                    const count = endDate.diff(startDate, 'minutes') / 60;
                     sum = sum + count;
                 });
                 res.status(200).json(sum);
@@ -75,7 +75,7 @@ class AppointmentCtrl extends base_1.default {
                 res.status(200).json(docs);
             });
         };
-        this.getWeeklyReport = (req, res) => {
+        this.getDailyReport = (req, res) => {
             let type = 'week';
             this.model.find({
                 start: { $gte: moment().startOf(type).add(1, 'days') },
@@ -115,18 +115,18 @@ class AppointmentCtrl extends base_1.default {
                 res.status(200).json(weekdayReport);
             });
         };
-        this.getDailyReport = (req, res) => {
+        this.getWeeklyReport = (req, res) => {
             let type = 'month';
             this.model.find({
-                start: { $gte: moment().startOf(type).add(1, 'months') },
-                end: { $lte: moment().startOf(type).add(5, 'months') }
+                start: { $gte: moment().startOf(type).add(2, 'months') },
+                end: { $lte: moment() }
             }, (err, docs) => {
                 if (err) {
                     return console.error(err);
                 }
                 const weekdayReport = [];
-                const days = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'];
-                for (let i = 0; i <= 4; i++) {
+                const days = ['This Week', 'Last Week', 'Past Week 1', 'Past Week 2', 'Past Week 3'];
+                for (let i = 4; i >= 0; i++) {
                     const appointmentsMatching = [];
                     docs.forEach(appointment => {
                         const startDate = moment(appointment.start);
@@ -205,7 +205,6 @@ class AppointmentCtrl extends base_1.default {
                 if (err) {
                     return console.error(err);
                 }
-                console.debug(docs);
                 const weekdayReport = [];
                 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
                 for (let i = 0; i <= 6; i++) {

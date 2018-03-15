@@ -33,7 +33,7 @@ export default class AppointmentCtrl extends BaseCtrl {
       docs.forEach(appointment => {
         const startDate = moment(appointment.start);
         const endDate = moment(appointment.end);
-        const count = endDate.diff(startDate, 'hours');
+        const count = endDate.diff(startDate, 'minutes') / 60;
         sum = sum + count;
       });
       res.status(200).json(sum);
@@ -78,7 +78,7 @@ export default class AppointmentCtrl extends BaseCtrl {
     });
   };
 
-  getWeeklyReport = (req, res) => {
+  getDailyReport = (req, res) => {
     let type: moment.unitOfTime.StartOf = 'week';
     this.model.find({
       start: {$gte: moment().startOf(type).add(1, 'days')},
@@ -118,18 +118,18 @@ export default class AppointmentCtrl extends BaseCtrl {
     });
   };
 
-  getDailyReport = (req, res) => {
+  getWeeklyReport = (req, res) => {
     let type: moment.unitOfTime.StartOf = 'month';
     this.model.find({
-      start: {$gte: moment().startOf(type).add(1, 'months')},
-      end: {$lte: moment().startOf(type).add(5, 'months')}
+      start: {$gte: moment().startOf(type).add(2, 'months')},
+      end: {$lte: moment()}
     }, (err, docs) => {
       if (err) {
         return console.error(err);
       }
       const weekdayReport: WeekdayReportItem[] = [];
-      const days: string[] = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'];
-      for (let i = 0; i <= 4; i++) {
+      const days: string[] = ['This Week', 'Last Week', 'Past Week 1', 'Past Week 2', 'Past Week 3'];
+      for (let i = 4; i >= 0; i++) {
         const appointmentsMatching: any[] = [];
         docs.forEach(appointment => {
           const startDate = moment(appointment.start);
@@ -208,7 +208,6 @@ export default class AppointmentCtrl extends BaseCtrl {
       if (err) {
         return console.error(err);
       }
-      console.debug(docs);
       const weekdayReport: WeekdayReportItem[] = [];
       const days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       for (let i = 0; i <= 6; i++) {
