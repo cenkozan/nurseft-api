@@ -71,13 +71,24 @@ export default function setRoutes(app) {
   // Appointment Reports
   router.route('/appointment/reports/total-hours').get(appointmentCtrl.countTotalHours);
   router.route('/appointment/reports/total-revenue').get(appointmentCtrl.countTotalRevenue);
+
+  router.route('/appointment/reports/all-report/client/:id').get(appointmentCtrl.getAllReportByClient);
+  router.route('/appointment/reports/all-report/carer/:id').get(appointmentCtrl.getAllReportByCarer);
+
+  router.route('/appointment/reports/daily-report/client/:id').get(appointmentCtrl.getDailyReportByClient);
+  router.route('/appointment/reports/weekly-report/client/:id').get(appointmentCtrl.getWeeklyReportByClient);
+  router.route('/appointment/reports/monthly-report/client/:id').get(appointmentCtrl.getMonthlyReportByClient);
+
+  router.route('/appointment/reports/daily-report/carer/:id').get(appointmentCtrl.getDailyReportByCarer);
+  router.route('/appointment/reports/weekly-report/carer/:id').get(appointmentCtrl.getWeeklyReportByCarer);
+  router.route('/appointment/reports/monthly-report/carer/:id').get(appointmentCtrl.getMonthlyReportByCarer);
+
   router.route('/appointment/reports/daily-report').get(appointmentCtrl.getDailyReport);
   router.route('/appointment/reports/weekly-report').get(appointmentCtrl.getWeeklyReport);
   router.route('/appointment/reports/monthly-report').get(appointmentCtrl.getMonthlyReport);
 
   // Appointment Client Carers
   router.route('/appointment/client/:id').get(appointmentCtrl.getAllByClient);
-  router.route('/appointment/carer/:id/reports/weekly-report').get(appointmentCtrl.getDailyReportByCarer);
   router.route('/appointment/carer/:id/reports/owed/:start/:end').get(appointmentCtrl.getCarerWorkDoneAllClientsBetweenTimePeriod);
   // Ordering important !!!
   router.route('/appointment/client/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfClientInDateRange);
