@@ -100,6 +100,10 @@ class AppointmentCtrl extends base_1.default {
                     let totalIncome = 0;
                     appointmentsMatching.forEach(appointment => {
                         if (appointment.sleepover) {
+                            const startDate = moment(appointment.start);
+                            const endDate = moment(appointment.end);
+                            const count = endDate.diff(startDate, 'minutes');
+                            totalHour = totalHour + count / 60;
                             totalIncome += appointment.rate;
                         }
                         else {
@@ -139,6 +143,10 @@ class AppointmentCtrl extends base_1.default {
                     let totalIncome = 0;
                     appointmentsMatching.forEach(appointment => {
                         if (appointment.sleepover) {
+                            const startDate = moment(appointment.start);
+                            const endDate = moment(appointment.end);
+                            const count = endDate.diff(startDate, 'minutes');
+                            totalHour = totalHour + count / 60;
                             totalIncome += appointment.rate;
                         }
                         else {
@@ -179,6 +187,10 @@ class AppointmentCtrl extends base_1.default {
                     let totalIncome = 0;
                     appointmentsMatching.forEach(appointment => {
                         if (appointment.sleepover) {
+                            const startDate = moment(appointment.start);
+                            const endDate = moment(appointment.end);
+                            const count = endDate.diff(startDate, 'minutes');
+                            totalHour = totalHour + count / 60;
                             totalIncome += appointment.rate;
                         }
                         else {
@@ -223,6 +235,10 @@ class AppointmentCtrl extends base_1.default {
                     let totalIncome = 0;
                     appointmentsMatching.forEach(appointment => {
                         if (appointment.sleepover) {
+                            const startDate = moment(appointment.start);
+                            const endDate = moment(appointment.end);
+                            const count = endDate.diff(startDate, 'minutes');
+                            totalHour = totalHour + count / 60;
                             totalIncome += appointment.rate;
                         }
                         else {

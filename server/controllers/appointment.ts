@@ -103,6 +103,10 @@ export default class AppointmentCtrl extends BaseCtrl {
         let totalIncome: number = 0;
         appointmentsMatching.forEach(appointment => {
           if (appointment.sleepover) {
+            const startDate = moment(appointment.start);
+            const endDate = moment(appointment.end);
+            const count = endDate.diff(startDate, 'minutes');
+            totalHour = totalHour + count / 60;
             totalIncome += appointment.rate;
           } else {
             const startDate = moment(appointment.start);
@@ -143,6 +147,10 @@ export default class AppointmentCtrl extends BaseCtrl {
         let totalIncome: number = 0;
         appointmentsMatching.forEach(appointment => {
           if (appointment.sleepover) {
+            const startDate = moment(appointment.start);
+            const endDate = moment(appointment.end);
+            const count = endDate.diff(startDate, 'minutes');
+            totalHour = totalHour + count / 60;
             totalIncome += appointment.rate;
           } else {
             const startDate = moment(appointment.start);
@@ -183,6 +191,10 @@ export default class AppointmentCtrl extends BaseCtrl {
         let totalIncome: number = 0;
         appointmentsMatching.forEach(appointment => {
           if (appointment.sleepover) {
+            const startDate = moment(appointment.start);
+            const endDate = moment(appointment.end);
+            const count = endDate.diff(startDate, 'minutes');
+            totalHour = totalHour + count / 60;
             totalIncome += appointment.rate;
           } else {
             const startDate = moment(appointment.start);
@@ -227,6 +239,10 @@ export default class AppointmentCtrl extends BaseCtrl {
         let totalIncome: number = 0;
         appointmentsMatching.forEach(appointment => {
           if (appointment.sleepover) {
+            const startDate = moment(appointment.start);
+            const endDate = moment(appointment.end);
+            const count = endDate.diff(startDate, 'minutes');
+            totalHour = totalHour + count / 60;
             totalIncome += appointment.rate;
           } else {
             const startDate = moment(appointment.start);
