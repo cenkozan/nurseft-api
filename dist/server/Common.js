@@ -14,11 +14,11 @@ class WeekStructure {
     constructor(startDate, endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.startDateAsString = moment(startDate).format('MMMM Do YYYY');
-        this.endDateAsString = moment(endDate).format('MMMM Do YYYY');
+        this.startDateAsString = moment(startDate).format('MMM D');
+        this.endDateAsString = moment(endDate).format('MMM D');
     }
     toString() {
-        return this.startDateAsString + ' - ' + this.endDateAsString;
+        return this.startDateAsString + '-' + this.endDateAsString;
     }
 }
 exports.WeekStructure = WeekStructure;

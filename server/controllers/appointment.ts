@@ -286,7 +286,7 @@ export default class AppointmentCtrl extends BaseCtrl {
             totalIncome = totalIncome + (count * (appointment.rate / 60));
           }
         });
-        weekdayReport.push(new ReportItem(String(moment(weekArray[i].startDate).week()), totalHour, appointmentsMatching.length, totalIncome));
+        weekdayReport.push(new ReportItem(weekArray[i].toString(), totalHour, appointmentsMatching.length, totalIncome));
         if (moment().isSame(moment().startOf(type).add(i, 'week'), 'week')) {
           break;
         }
