@@ -1,7 +1,7 @@
 import BaseCtrl from './base';
 import Appointment from '../models/appointment';
 import * as moment from 'moment';
-import {WeekdayReportItem, WeekStructure} from '../Common';
+import {ReportItem, WeekStructure} from '../Common';
 
 export default class AppointmentCtrl extends BaseCtrl {
   model = Appointment;
@@ -87,7 +87,7 @@ export default class AppointmentCtrl extends BaseCtrl {
       if (err) {
         return console.error(err);
       }
-      const weekdayReport: WeekdayReportItem[] = [];
+      const weekdayReport: ReportItem[] = [];
       const days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       for (let i = 0; i <= 6; i++) {
         const appointmentsMatching: any[] = [];
@@ -116,7 +116,7 @@ export default class AppointmentCtrl extends BaseCtrl {
             totalIncome = totalIncome + (count * (appointment.rate / 60));
           }
         });
-        weekdayReport.push(new WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
+        weekdayReport.push(new ReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
       }
       res.status(200).json(weekdayReport);
     });
@@ -130,7 +130,7 @@ export default class AppointmentCtrl extends BaseCtrl {
       if (err) {
         return console.error(err);
       }
-      const weekdayReport: WeekdayReportItem[] = [];
+      const weekdayReport: ReportItem[] = [];
       const weekCount = 52;
       const weekArray: WeekStructure[] = [];
       for (let i = 0; i < weekCount; i++) {
@@ -160,7 +160,7 @@ export default class AppointmentCtrl extends BaseCtrl {
             totalIncome = totalIncome + (count * (appointment.rate / 60));
           }
         });
-        weekdayReport.push(new WeekdayReportItem(weekArray[i].toString(), totalHour, appointmentsMatching.length, totalIncome));
+        weekdayReport.push(new ReportItem(String(moment(weekArray[i].startDate).week()), totalHour, appointmentsMatching.length, totalIncome));
         if (moment().isSame(moment().startOf(type).add(i, 'week'), 'week')) {
           break;
         }
@@ -177,7 +177,7 @@ export default class AppointmentCtrl extends BaseCtrl {
       if (err) {
         return console.error(err);
       }
-      const weekdayReport: WeekdayReportItem[] = [];
+      const weekdayReport: ReportItem[] = [];
       for (let i = 0; i <= 11; i++) {
         const appointmentsMatching: any[] = [];
         docs.forEach(appointment => {
@@ -204,7 +204,7 @@ export default class AppointmentCtrl extends BaseCtrl {
             totalIncome = totalIncome + (count * (appointment.rate / 60));
           }
         });
-        weekdayReport.push(new WeekdayReportItem(moment().startOf(type).add(i, 'month').format('MMMM'), totalHour, appointmentsMatching.length, totalIncome));
+        weekdayReport.push(new ReportItem(moment().startOf(type).add(i, 'month').format('MMMM'), totalHour, appointmentsMatching.length, totalIncome));
         if (moment().isSame(moment().startOf(type).add(i, 'month'), 'month')) {
           break;
         }
@@ -223,7 +223,7 @@ export default class AppointmentCtrl extends BaseCtrl {
       if (err) {
         return console.error(err);
       }
-      const weekdayReport: WeekdayReportItem[] = [];
+      const weekdayReport: ReportItem[] = [];
       const days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       for (let i = 0; i <= 6; i++) {
         const appointmentsMatching: any[] = [];
@@ -252,7 +252,7 @@ export default class AppointmentCtrl extends BaseCtrl {
             totalIncome = totalIncome + (count * (appointment.rate / 60));
           }
         });
-        weekdayReport.push(new WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
+        weekdayReport.push(new ReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
       }
       res.status(200).json(weekdayReport);
     });

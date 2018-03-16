@@ -114,7 +114,7 @@ class AppointmentCtrl extends base_1.default {
                             totalIncome = totalIncome + (count * (appointment.rate / 60));
                         }
                     });
-                    weekdayReport.push(new Common_1.WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
+                    weekdayReport.push(new Common_1.ReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
                 }
                 res.status(200).json(weekdayReport);
             });
@@ -157,7 +157,7 @@ class AppointmentCtrl extends base_1.default {
                             totalIncome = totalIncome + (count * (appointment.rate / 60));
                         }
                     });
-                    weekdayReport.push(new Common_1.WeekdayReportItem(weekArray[i].toString(), totalHour, appointmentsMatching.length, totalIncome));
+                    weekdayReport.push(new Common_1.ReportItem(String(moment(weekArray[i].startDate).week()), totalHour, appointmentsMatching.length, totalIncome));
                     if (moment().isSame(moment().startOf(type).add(i, 'week'), 'week')) {
                         break;
                     }
@@ -201,7 +201,7 @@ class AppointmentCtrl extends base_1.default {
                             totalIncome = totalIncome + (count * (appointment.rate / 60));
                         }
                     });
-                    weekdayReport.push(new Common_1.WeekdayReportItem(moment().startOf(type).add(i, 'month').format('MMMM'), totalHour, appointmentsMatching.length, totalIncome));
+                    weekdayReport.push(new Common_1.ReportItem(moment().startOf(type).add(i, 'month').format('MMMM'), totalHour, appointmentsMatching.length, totalIncome));
                     if (moment().isSame(moment().startOf(type).add(i, 'month'), 'month')) {
                         break;
                     }
@@ -249,7 +249,7 @@ class AppointmentCtrl extends base_1.default {
                             totalIncome = totalIncome + (count * (appointment.rate / 60));
                         }
                     });
-                    weekdayReport.push(new Common_1.WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
+                    weekdayReport.push(new Common_1.ReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
                 }
                 res.status(200).json(weekdayReport);
             });

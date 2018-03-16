@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 
-class WeekdayReportItem {
-  constructor(private day: string, private hours: number, private appointments: number, private revenue: number) {
+class ReportItem {
+  constructor(private data: string, private hours: number, private appointments: number, private revenue: number) {
   }
 }
 
@@ -21,4 +21,4 @@ class WeekStructure {
   }
 }
 
-export {WeekdayReportItem, WeekStructure};
+export {ReportItem, WeekStructure};

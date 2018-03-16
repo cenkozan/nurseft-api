@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
-class WeekdayReportItem {
-    constructor(day, hours, appointments, revenue) {
-        this.day = day;
+class ReportItem {
+    constructor(data, hours, appointments, revenue) {
+        this.data = data;
         this.hours = hours;
         this.appointments = appointments;
         this.revenue = revenue;
     }
 }
-exports.WeekdayReportItem = WeekdayReportItem;
+exports.ReportItem = ReportItem;
 class WeekStructure {
     constructor(startDate, endDate) {
         this.startDate = startDate;
