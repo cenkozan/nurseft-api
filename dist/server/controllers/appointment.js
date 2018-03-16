@@ -116,20 +116,18 @@ class AppointmentCtrl extends base_1.default {
             });
         };
         this.getWeeklyReport = (req, res) => {
-            let type = 'week';
+            let type = 'year';
             this.model.find({
-                start: { $gte: moment().startOf(type).subtract(2, 'months').toDate() }
+                start: { $gte: moment().startOf(type).toDate() }
             }, (err, docs) => {
                 if (err) {
                     return console.error(err);
                 }
                 const weekdayReport = [];
-                const weekCount = 5;
+                const weekCount = 52;
                 const weekArray = [];
                 for (let i = 0; i < weekCount; i++) {
-                    weekArray.push(new Common_1.WeekStructure(moment().startOf(type).subtract((i), 'week').add(1, 'day').toDate(), moment().endOf(type).subtract((i), 'week').add(1, 'day').toDate()));
-                }
-                for (let i = 0; i < weekCount; i++) {
+                    weekArray.push(new Common_1.WeekStructure(moment().startOf(type).add(i, 'week').toDate(), moment().startOf(type).add(i, 'week').add(6, 'day').toDate()));
                     const appointmentsMatching = [];
                     docs.forEach(appointment => {
                         const startDate = moment(appointment.start);
@@ -137,7 +135,6 @@ class AppointmentCtrl extends base_1.default {
                             appointmentsMatching.push(appointment);
                         }
                     });
-                    let total = 0;
                     let totalHour = 0;
                     let totalIncome = 0;
                     appointmentsMatching.forEach(appointment => {
@@ -153,6 +150,9 @@ class AppointmentCtrl extends base_1.default {
                         }
                     });
                     weekdayReport.push(new Common_1.WeekdayReportItem(weekArray[i].toString(), totalHour, appointmentsMatching.length, totalIncome));
+                    if (moment().isSame(moment().startOf(type).add(i, 'week'), 'week')) {
+                        break;
+                    }
                 }
                 res.status(200).json(weekdayReport);
             });
@@ -190,6 +190,9 @@ class AppointmentCtrl extends base_1.default {
                         }
                     });
                     weekdayReport.push(new Common_1.WeekdayReportItem(moment().startOf(type).add(i, 'month').format('MMMM'), totalHour, appointmentsMatching.length, totalIncome));
+                    if (moment().isSame(moment().startOf(type).add(i, 'month'), 'month')) {
+                        break;
+                    }
                 }
                 res.status(200).json(weekdayReport);
             });

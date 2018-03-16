@@ -119,21 +119,19 @@ export default class AppointmentCtrl extends BaseCtrl {
   };
 
   getWeeklyReport = (req, res) => {
-    let type: moment.unitOfTime.StartOf = 'week';
+    let type: moment.unitOfTime.StartOf = 'year';
     this.model.find({
-      start: {$gte: moment().startOf(type).subtract(2, 'months').toDate()}
+      start: {$gte: moment().startOf(type).toDate()}
     }, (err, docs) => {
       if (err) {
         return console.error(err);
       }
       const weekdayReport: WeekdayReportItem[] = [];
-      const weekCount = 5;
+      const weekCount = 52;
       const weekArray: WeekStructure[] = [];
       for (let i = 0; i < weekCount; i++) {
-        weekArray.push(new WeekStructure(moment().startOf(type).subtract((i), 'week').add(1, 'day').toDate(),
-          moment().endOf(type).subtract((i), 'week').add(1, 'day').toDate()));
-      }
-      for (let i = 0; i < weekCount; i++) {
+        weekArray.push(new WeekStructure(moment().startOf(type).add(i, 'week').toDate(),
+          moment().startOf(type).add(i, 'week').add(6, 'day').toDate()));
         const appointmentsMatching: any[] = [];
         docs.forEach(appointment => {
           const startDate = moment(appointment.start);
@@ -141,7 +139,6 @@ export default class AppointmentCtrl extends BaseCtrl {
             appointmentsMatching.push(appointment);
           }
         });
-        let total = 0;
         let totalHour: number = 0;
         let totalIncome: number = 0;
         appointmentsMatching.forEach(appointment => {
@@ -156,6 +153,9 @@ export default class AppointmentCtrl extends BaseCtrl {
           }
         });
         weekdayReport.push(new WeekdayReportItem(weekArray[i].toString(), totalHour, appointmentsMatching.length, totalIncome));
+        if (moment().isSame(moment().startOf(type).add(i, 'week'), 'week')) {
+          break;
+        }
       }
       res.status(200).json(weekdayReport);
     });
@@ -193,6 +193,9 @@ export default class AppointmentCtrl extends BaseCtrl {
           }
         });
         weekdayReport.push(new WeekdayReportItem(moment().startOf(type).add(i, 'month').format('MMMM'), totalHour, appointmentsMatching.length, totalIncome));
+        if (moment().isSame(moment().startOf(type).add(i, 'month'), 'month')) {
+          break;
+        }
       }
       res.status(200).json(weekdayReport);
     });

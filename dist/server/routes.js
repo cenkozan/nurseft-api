@@ -28,9 +28,9 @@ function setRoutes(app) {
     router.route('/client/:id/blood-pressure').put(clientCtrl.insertBloodPressure);
     router.route('/client/:id/weight').put(clientCtrl.insertWeight);
     router.route('/client/:id/incident').put(clientCtrl.insertIncident);
+    router.route('/client/:id/incident/:incident_id/file/:file_id').delete(clientCtrl.deleteFileInIncident);
     router.route('/client/:id/incident/:incident_id').put(clientCtrl.updateIncident);
     router.route('/client/:id/incident/:incident_id').delete(clientCtrl.deleteIncident);
-    router.route('/client/:id/incident/:incident_id/file/:file_id').delete(clientCtrl.deleteFileInIncident);
     // Carers
     router.route('/carers').get(carerCtrl.getAll);
     router.route('/carers/count').get(carerCtrl.count);
