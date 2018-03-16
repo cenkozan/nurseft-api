@@ -77,7 +77,7 @@ export default function setRoutes(app) {
 
   // Appointment Client Carers
   router.route('/appointment/client/:id').get(appointmentCtrl.getAllByClient);
-  router.route('/appointment/carer/:id/reports/daily-report').get(appointmentCtrl.getDailyReportByCarer);
+  router.route('/appointment/carer/:id/reports/weekly-report').get(appointmentCtrl.getDailyReportByCarer);
   router.route('/appointment/carer/:id/reports/owed/:start/:end').get(appointmentCtrl.getCarerWorkDoneAllClientsBetweenTimePeriod);
   // Ordering important !!!
   router.route('/appointment/client/:id/:start/:end').get(appointmentCtrl.getAppointmentsOfClientInDateRange);
