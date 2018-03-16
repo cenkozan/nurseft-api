@@ -1,7 +1,7 @@
 import BaseCtrl from './base';
 import Appointment from '../models/appointment';
 import * as moment from 'moment';
-import {WeekdayReportItem} from '../Common';
+import {WeekdayReportItem, WeekStructure} from '../Common';
 
 export default class AppointmentCtrl extends BaseCtrl {
   model = Appointment;
@@ -36,7 +36,7 @@ export default class AppointmentCtrl extends BaseCtrl {
         const count = endDate.diff(startDate, 'minutes');
         sum = sum + count;
       });
-      res.status(200).json(Math.floor(sum/60));
+      res.status(200).json(Math.floor(sum / 60));
     });
   };
 
@@ -78,11 +78,11 @@ export default class AppointmentCtrl extends BaseCtrl {
     });
   };
 
-  getWeeklyReport = (req, res) => {
+  getDailyReport = (req, res) => {
     let type: moment.unitOfTime.StartOf = 'week';
     this.model.find({
-      start: {$gte: moment().startOf(type).add(1, 'days')},
-      end: {$lte: moment().startOf(type).add(8, 'days')}
+      start: {$gte: moment().startOf(type).add(1, 'days').toDate()},
+      end: {$lte: moment().startOf(type).add(8, 'days').toDate()}
     }, (err, docs) => {
       if (err) {
         return console.error(err);
@@ -94,7 +94,7 @@ export default class AppointmentCtrl extends BaseCtrl {
         docs.forEach(appointment => {
           const startDate = moment(appointment.start);
           const endDate = moment(appointment.end);
-          if (startDate.isAfter(moment().startOf(type).add(i + 1, 'days')) && moment(endDate).isBetween(moment().startOf(type).add(i, 'days'), moment().startOf(type).add(i + 2, 'days'))) {
+          if (startDate.isSame(moment().startOf(type).add(i + 1, 'days'), 'day')) {
             appointmentsMatching.push(appointment);
           }
         });
@@ -108,7 +108,7 @@ export default class AppointmentCtrl extends BaseCtrl {
             const startDate = moment(appointment.start);
             const endDate = moment(appointment.end);
             const count = endDate.diff(startDate, 'minutes');
-            totalHour = totalHour + count;
+            totalHour = totalHour + count / 60;
             totalIncome = totalIncome + (count * (appointment.rate / 60));
           }
         });
@@ -118,23 +118,26 @@ export default class AppointmentCtrl extends BaseCtrl {
     });
   };
 
-  getZWeeklyReport = (req, res) => {
-    let type: moment.unitOfTime.StartOf = 'month';
+  getWeeklyReport = (req, res) => {
+    let type: moment.unitOfTime.StartOf = 'week';
     this.model.find({
-      start: {$gte: moment().startOf(type).add(2, 'months')},
-      end: {$lte: moment()}
+      start: {$gte: moment().startOf(type).subtract(2, 'months').toDate()}
     }, (err, docs) => {
       if (err) {
         return console.error(err);
       }
       const weekdayReport: WeekdayReportItem[] = [];
-      const days: string[] = ['This Week', 'Last Week', 'Past Week 1', 'Past Week 2', 'Past Week 3'];
-      for (let i = 4; i >= 0; i++) {
+      const weekCount = 5;
+      const weekArray: WeekStructure[] = [];
+      for (let i = 0; i < weekCount; i++) {
+        weekArray.push(new WeekStructure(moment().startOf(type).subtract((i), 'week').add(1, 'day').toDate(),
+          moment().endOf(type).subtract((i), 'week').add(1, 'day').toDate()));
+      }
+      for (let i = 0; i < weekCount; i++) {
         const appointmentsMatching: any[] = [];
         docs.forEach(appointment => {
           const startDate = moment(appointment.start);
-          const endDate = moment(appointment.end);
-          if (startDate.isAfter(moment().startOf(type).add(i + 1, 'weeks')) && moment(endDate).isBetween(moment().startOf(type).add(i, 'weeks'), moment().startOf(type).add(i + 2, 'weeks'))) {
+          if (startDate.isBetween(moment(weekArray[i].startDate), moment(weekArray[i].endDate))) {
             appointmentsMatching.push(appointment);
           }
         });
@@ -148,33 +151,30 @@ export default class AppointmentCtrl extends BaseCtrl {
             const startDate = moment(appointment.start);
             const endDate = moment(appointment.end);
             const count = endDate.diff(startDate, 'minutes');
-            totalHour = totalHour + count;
+            totalHour = totalHour + count/60;
             totalIncome = totalIncome + (count * (appointment.rate / 60));
           }
         });
-        weekdayReport.push(new WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
+        weekdayReport.push(new WeekdayReportItem(weekArray[i].toString(), totalHour, appointmentsMatching.length, totalIncome));
       }
       res.status(200).json(weekdayReport);
     });
   };
 
   getMonthlyReport = (req, res) => {
-    let type: moment.unitOfTime.StartOf = 'week';
+    let type: moment.unitOfTime.StartOf = 'year';
     this.model.find({
-      start: {$gte: moment().startOf(type).add(1, 'days')},
-      end: {$lte: moment().startOf(type).add(8, 'days')}
+      start: {$gte: moment().startOf(type).toDate()}
     }, (err, docs) => {
       if (err) {
         return console.error(err);
       }
       const weekdayReport: WeekdayReportItem[] = [];
-      const days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-      for (let i = 0; i <= 6; i++) {
+      for (let i = 0; i <= 11; i++) {
         const appointmentsMatching: any[] = [];
         docs.forEach(appointment => {
           const startDate = moment(appointment.start);
-          const endDate = moment(appointment.end);
-          if (startDate.isAfter(moment().startOf(type).add(i + 1, 'days')) && moment(endDate).isBetween(moment().startOf(type).add(i, 'days'), moment().startOf(type).add(i + 2, 'days'))) {
+          if (startDate.isSame(moment().startOf(type).add(i, 'month'), 'month')) {
             appointmentsMatching.push(appointment);
           }
         });
@@ -188,17 +188,17 @@ export default class AppointmentCtrl extends BaseCtrl {
             const startDate = moment(appointment.start);
             const endDate = moment(appointment.end);
             const count = endDate.diff(startDate, 'minutes');
-            totalHour = totalHour + count;
+            totalHour = totalHour + count/60;
             totalIncome = totalIncome + (count * (appointment.rate / 60));
           }
         });
-        weekdayReport.push(new WeekdayReportItem(days[i], totalHour, appointmentsMatching.length, totalIncome));
+        weekdayReport.push(new WeekdayReportItem(moment().startOf(type).add(i, 'month').format('MMMM'), totalHour, appointmentsMatching.length, totalIncome));
       }
       res.status(200).json(weekdayReport);
     });
   };
 
-  getWeeklyReportByCarer = (req, res) => {
+  getDailyReportByCarer = (req, res) => {
     let type: moment.unitOfTime.StartOf = 'week';
     this.model.find({
       carer: req.params.id,
@@ -215,7 +215,7 @@ export default class AppointmentCtrl extends BaseCtrl {
         docs.forEach(appointment => {
           const startDate = moment(appointment.start);
           const endDate = moment(appointment.end);
-          if (startDate.isAfter(moment().startOf(type).add(i + 1, 'days')) && moment(endDate).isBetween(moment().startOf(type).add(i, 'days'), moment().startOf(type).add(i + 2, 'days'))) {
+          if (startDate.isSame(moment().startOf(type).add(i + 1, 'days'), 'day')) {
             appointmentsMatching.push(appointment);
           }
         });
@@ -229,7 +229,7 @@ export default class AppointmentCtrl extends BaseCtrl {
             const startDate = moment(appointment.start);
             const endDate = moment(appointment.end);
             const count = endDate.diff(startDate, 'minutes');
-            totalHour = totalHour + (count);
+            totalHour = totalHour + count / 60;
             totalIncome = totalIncome + (count * (appointment.rate / 60));
           }
         });
